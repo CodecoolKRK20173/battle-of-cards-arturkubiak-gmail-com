@@ -1,15 +1,15 @@
 package com.codecool.app;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class UserPlayer extends Player {
+public class ComputerPlayer extends Player {
 
-    public UserPlayer(String name, ArrayList<Card> cards) {
+    public ComputerPlayer(String name, ArrayList<Card> cards) {
         super(name, cards);
         Name = name;
         Cards = cards;
     }
+
 
     @Override
     public int chooseCardField() {
