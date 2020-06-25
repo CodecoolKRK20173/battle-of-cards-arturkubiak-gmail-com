@@ -16,7 +16,7 @@ public class View {
         System.out.print(str);
     }
 
-    void  println(String str) {
+    void println(String str) {
         System.out.println(str);
     }
 
