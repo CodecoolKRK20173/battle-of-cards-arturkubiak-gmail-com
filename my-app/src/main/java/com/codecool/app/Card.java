@@ -58,6 +58,8 @@ public class Card {
         return sixth;
     }
 
+    public int getBiggestField(){return first; }
+
     @Override
     public String toString() {
         StringBuilder card = new StringBuilder();
