@@ -24,8 +24,7 @@ public class CardsSourceCSV implements CardsSourceDAO {
             System.out.println("CSV file not found");
         }
 
-        return loadedCSV;
+        //return skips headlines
+        return loadedCSV.subList(1, loadedCSV.size());
     }
-
-
 }
