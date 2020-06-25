@@ -1,12 +1,8 @@
 package com.codecool.app;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
-public class Table<cards> {
+public class Table {
     private int countOfCard;
     private int countOfPlayers;
     private List<Card> deckOfCards;
@@ -26,7 +22,7 @@ public class Table<cards> {
         YES, NO;
     }
 
-    void run() throws IOException {
+    void run() {
         boolean isRun = true;
         CardsSourceCSV cardSource = new CardsSourceCSV();
         List<List<String>> strCards = cardSource.getCardsDataFromFile("./src/resources/players_20_top200.csv");
@@ -65,9 +61,6 @@ public class Table<cards> {
             }
         }
         scan.close();
-    }
-
-    private void deckOfCards(String s, String as, String joker) {
     }
 
     private Integer returnOption(View view, Scanner scan) {
