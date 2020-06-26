@@ -34,10 +34,7 @@ public class QuarterGame {
             decks.add(deckSecondPlayer);
         }
         game.getPlayersObject(decks, view, scan);
-
-        for (Player player : this.players) {
-            System.out.println(player.toString());
-        }
+        game.quarter(view);
 
         this.players.clear();
         this.isUser.clear();
@@ -55,6 +52,45 @@ public class QuarterGame {
                 String name = String.format("enemy%d", index + 1);
                 this.players.add(new ComputerPlayer(name, decks.get(index)));
             }
+        }
+    }
+
+    private void quarter(View view) {
+        ArrayList<Card> cardsInBuffer =  new ArrayList<>();
+        ArrayList<Card> cartsToCompare =  new ArrayList<>();
+        ComparatorForGame comparator = new ComparatorForGame();
+        //+++++++++++
+        int queue = 0; //to remove
+        //+++++++++++
+
+        while (this.players.get(0).hasNext() && this.players.get(1).hasNext()) {
+            //++++++++++
+            queue++; //to remove
+            //++++++++++
+            System.out.println(queue);
+
+            int result = 0;
+            for (Player player : this.players) {
+                if (player.hasNext()) {
+                    cartsToCompare.add(player.next());
+                }
+            }
+
+            result = comparator.compare(cartsToCompare.get(0), cartsToCompare.get(1));
+            cardsInBuffer.addAll(cartsToCompare);
+            cartsToCompare.clear();
+
+            if (result == 0 || result == 1) {
+                this.players.get(result).getCards().addAll(cardsInBuffer);
+                cardsInBuffer.clear();
+            }
+        }
+
+        if (this.players.get(0).hasNext()) {
+            view.println("Player 1 win!!!");
+        }
+        else {
+            view.println("Player 2 win!!!");
         }
     }
 }
