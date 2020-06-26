@@ -24,9 +24,6 @@ public class Table {
 
     void run() {
         boolean isRun = true;
-        CardsSourceCSV cardSource = new CardsSourceCSV();
-        List<List<String>> strCards = cardSource.getCardsDataFromFile("./src/resources/players_20_top200.csv");
-        Deck deckOfCards = new Deck(strCards.size(), strCards);
 
         Table table = new Table();
         View view = new View();
@@ -41,7 +38,7 @@ public class Table {
             switch (option) {
                 case 1:
                     table.chooseOptionOfGame(table, view, scan);
-                    table.launchGame(deckOfCards, view, scan);
+                    table.launchGame(view, scan);
                     break;
                 case 2:
                     view.println("Good bye!");
@@ -138,17 +135,14 @@ public class Table {
         }
     }
 
-    private void launchGame(Deck deckOfCards, View view, Scanner scan) {
-        Collections.shuffle(deckOfCards.getDeck());
-        List<Card> deckToGame = new ArrayList<>();
-
-        for (int index = 0; index < countOfCard; index++) {
-            deckToGame.add(deckOfCards.getDeck().get(index));
-        }
+    private void launchGame(View view, Scanner scan) {
+        CardsSourceCSV cardSource = new CardsSourceCSV();
+        List<List<String>> strCards = cardSource.getCardsDataFromFile("./src/resources/players_20_top200.csv");
+        Deck deckOfCards = new Deck(this.countOfCard, strCards);
 
         if (countOfPlayers == 2) {
-            QuarterGame game = new QuarterGame(deckToGame, this.countOfPlayers);
-            game.run();
+            QuarterGame game = new QuarterGame((ArrayList<Card>) deckOfCards.getDeck(), this.isUser);
+            game.run(game, view, scan);
         }
         else if ((countOfPlayers == 3)) {
             view.println("Option is not available. Sorry...");
