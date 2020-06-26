@@ -5,7 +5,7 @@ import java.util.*;
 public class Table {
     private int countOfCard;
     private int countOfPlayers;
-    private List<Card> deckOfCards;
+    private List<Boolean> isUser = new ArrayList<>();
 
     public Table() {
         this.countOfCard = 0;
@@ -18,7 +18,7 @@ public class Table {
     private enum OptionCountPlayers {
         TWO, THREE, FOUR;
     }
-    private enum OptionEnemy {
+    private enum OptionUser {
         YES, NO;
     }
 
@@ -26,18 +26,7 @@ public class Table {
         boolean isRun = true;
         CardsSourceCSV cardSource = new CardsSourceCSV();
         List<List<String>> strCards = cardSource.getCardsDataFromFile("./src/resources/players_20_top200.csv");
-        deckOfCards = new ArrayList<>();
-
-        for (int i = 0; i < strCards.size(); i++) {
-            int first = Integer.parseInt(strCards.get(i).get(1));
-            int second = Integer.parseInt(strCards.get(i).get(2));
-            int third = Integer.parseInt(strCards.get(i).get(3));
-            int fourth = Integer.parseInt(strCards.get(i).get(4));
-            int fifth = Integer.parseInt(strCards.get(i).get(5));
-            int sixth = Integer.parseInt(strCards.get(i).get(6));
-            Card card = new Card(strCards.get(i).get(0), first, second, third, fourth, fifth, sixth);
-            deckOfCards.add(card);
-        }
+        Deck deckOfCards = new Deck(strCards.size(), strCards);
 
         Table table = new Table();
         View view = new View();
@@ -79,6 +68,7 @@ public class Table {
     private void chooseOptionOfGame(Table table, View view, Scanner scan) {
         chooseCountOfCard(table, view, scan);
         chooseCountPlayers(table, view, scan);
+        chooseUserEnemy(table, view, scan);
     }
 
     private void chooseCountOfCard(Table table, View view, Scanner scan) {
@@ -125,12 +115,35 @@ public class Table {
         }
     }
 
-    private void launchGame(List<Card> deckOfCards, View view, Scanner scan) {
-        Collections.shuffle(deckOfCards);
+    private void chooseUserEnemy(Table table, View view, Scanner scan) {
+        for (int index = 0; index < this.countOfPlayers; index++) {
+            view.clearScreen();
+            boolean isRun = true;
+
+            while (isRun) {
+                OptionUser[] users = OptionUser.values();
+                table.printEnum(users, view);
+                view.println("Enter 'yes' if the player is to be a user. If not, enter 'no'");
+                String option = scan.nextLine().toUpperCase().trim();
+
+                if (option.equals("1") || option.equals("Y") || option.equals("YES")) {
+                    this.isUser.add(true);
+                    isRun =false;
+                }
+                else if (option.equals("2") || option.equals("N") || option.equals("NO")) {
+                    this.isUser.add(false);
+                    isRun =false;
+                }
+            }
+        }
+    }
+
+    private void launchGame(Deck deckOfCards, View view, Scanner scan) {
+        Collections.shuffle(deckOfCards.getDeck());
         List<Card> deckToGame = new ArrayList<>();
 
         for (int index = 0; index < countOfCard; index++) {
-            deckToGame.add(deckOfCards.get(index));
+            deckToGame.add(deckOfCards.getDeck().get(index));
         }
 
         if (countOfPlayers == 2) {
