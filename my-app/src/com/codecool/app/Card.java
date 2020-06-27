@@ -85,6 +85,10 @@ public class Card {
         return biggestAttributeList;
     }
 
+    public int getAtribute(int choosenAtribute){
+        return attributeList.get(choosenAtribute);
+    }
+
     public int getBiggestField() {
         ArrayList<Double> listOfArgs = getMultiplyAtrList();
         int counter = 0;

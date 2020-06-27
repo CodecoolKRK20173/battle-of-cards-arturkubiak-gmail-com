@@ -10,12 +10,12 @@ public class ComputerPlayer extends Player {
         Cards = cards;
     }
 
-
     @Override
     public int chooseCardField() {
         Card card = Cards.get(0);
-        System.out.println(card);
+
+        System.out.println(card.toString());
+        System.out.println("Computer choose field: " + card.getBiggestField());
         return card.getBiggestField();
-//        return card.getBiggestField();
     }
 }

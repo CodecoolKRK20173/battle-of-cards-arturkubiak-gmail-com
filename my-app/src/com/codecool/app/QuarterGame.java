@@ -33,6 +33,25 @@ public class QuarterGame {
             decks.add(deckFirstPlayer);
             decks.add(deckSecondPlayer);
         }
+
+        Player bj = new UserPlayer("BJ", (ArrayList<Card>) deckFirstPlayer); //added to test metoths
+        int usertchoose = bj.chooseCardField(); // don't be mad on me :)
+        Card cardBJ = bj.next();
+
+        Player computer = new ComputerPlayer("computer", (ArrayList<Card>) deckFirstPlayer);
+        int computerchoose = computer.chooseCardField();
+        Card cardComputer = computer.next(); //due to next remove card but i want to compare the same card
+
+        System.out.println("If user choose field " + cardBJ.getAtribute(usertchoose) + " " + cardComputer.getAtribute(usertchoose));
+        System.out.println("If computer choose field " + cardBJ.getAtribute(computerchoose) + " " + cardComputer.getAtribute(computerchoose));
+
+
+
+
+
+
+
+
         game.getPlayersObject(decks, view, scan);
         game.quarter(view);
 
