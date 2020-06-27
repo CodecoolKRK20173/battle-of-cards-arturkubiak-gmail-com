@@ -12,7 +12,10 @@ public class UserPlayer extends Player {
 
     @Override
     public int chooseCardField() {
-        Card card = next();
-        return card.getBiggestField();
+        Card card = Cards.get(0);
+        System.out.println(card);
+        System.out.println(card.getBiggestFieldList());
+        return  card.getBiggestFieldList();
+//        return card.getBiggestField();
     }
 }

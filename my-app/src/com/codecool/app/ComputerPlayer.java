@@ -13,7 +13,9 @@ public class ComputerPlayer extends Player {
 
     @Override
     public int chooseCardField() {
-        Card card = next();
-        return card.getBiggestField();
+        Card card = Cards.get(0);
+        System.out.println(card);
+        return card.getBiggestFieldList();
+//        return card.getBiggestField();
     }
 }

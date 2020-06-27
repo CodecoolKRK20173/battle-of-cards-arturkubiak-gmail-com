@@ -28,9 +28,12 @@ public class QuarterGame {
                 deckSecondPlayer.add(card);
             }
         }
-        System.out.println(deckFirstPlayer.toString());
-        System.out.println(deckFirstPlayer.size());
-        System.out.println(deckSecondPlayer.toString());
-        System.out.println(deckSecondPlayer.size());
+        Player bj = new UserPlayer("BJ", (ArrayList<Card>) deckFirstPlayer);
+        bj.chooseCardField();
+
+//        System.out.println(deckFirstPlayer.toString());
+//        System.out.println(deckFirstPlayer.size());
+//        System.out.println(deckSecondPlayer.toString());
+//        System.out.println(deckSecondPlayer.size());
     }
 }
