@@ -15,7 +15,7 @@ public class ComputerPlayer extends Player {
     public int chooseCardField() {
         Card card = Cards.get(0);
         System.out.println(card);
-        return card.getBiggestFieldList();
+        return card.getBiggestField();
 //        return card.getBiggestField();
     }
 }

@@ -14,8 +14,8 @@ public class UserPlayer extends Player {
     public int chooseCardField() {
         Card card = Cards.get(0);
         System.out.println(card);
-        System.out.println(card.getBiggestFieldList());
-        return  card.getBiggestFieldList();
+        System.out.println(card.getBiggestField());
+        return  card.getBiggestField();
 //        return card.getBiggestField();
     }
 }

@@ -85,7 +85,7 @@ public class Card {
         return biggestAttributeList;
     }
 
-    public int getBiggestFieldList() {
+    public int getBiggestField() {
         ArrayList<Double> listOfArgs = getMultiplyAtrList();
         int counter = 0;
         double maxVale = 0;
