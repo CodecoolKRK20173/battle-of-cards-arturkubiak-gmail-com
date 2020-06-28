@@ -8,6 +8,7 @@ public class QuarterGame {
     private ArrayList<Card> deckToGame;
     private List<Boolean> isUser;
     private ArrayList<Player> players = new ArrayList<>();
+    int chooseToComare;
 
     public QuarterGame(ArrayList<Card> deckToGame, List<Boolean> isUser) {
         this.deckToGame = deckToGame;
@@ -33,7 +34,7 @@ public class QuarterGame {
             decks.add(deckFirstPlayer);
             decks.add(deckSecondPlayer);
         }
-
+        /*
         Player bj = new UserPlayer("BJ", (ArrayList<Card>) deckFirstPlayer); //added to test metoths
         int usertchoose = bj.chooseCardField(); // don't be mad on me :)
         Card cardBJ = bj.next();
@@ -42,15 +43,9 @@ public class QuarterGame {
         int computerchoose = computer.chooseCardField();
         Card cardComputer = computer.next(); //due to next remove card but i want to compare the same card
 
-        System.out.println("If user choose field " + cardBJ.getAtribute(usertchoose) + " " + cardComputer.getAtribute(usertchoose));
+        System.out.println("If user choose fie  ld " + cardBJ.getAtribute(usertchoose) + " " + cardComputer.getAtribute(usertchoose));
         System.out.println("If computer choose field " + cardBJ.getAtribute(computerchoose) + " " + cardComputer.getAtribute(computerchoose));
-
-
-
-
-
-
-
+        */
 
         game.getPlayersObject(decks, view, scan);
         game.quarter(view);
@@ -68,7 +63,7 @@ public class QuarterGame {
                 this.players.add(new UserPlayer(name, decks.get(index)));
             }
             else {
-                String name = String.format("enemy%d", index + 1);
+                String name = String.format("Enemy%d", index + 1);
                 this.players.add(new ComputerPlayer(name, decks.get(index)));
             }
         }
@@ -78,19 +73,14 @@ public class QuarterGame {
         ArrayList<Card> cardsInBuffer =  new ArrayList<>();
         ArrayList<Card> cartsToCompare =  new ArrayList<>();
         ComparatorForGame comparator = new ComparatorForGame();
-        //+++++++++++
-        int queue = 0; //to remove
-        //+++++++++++
+        this.chooseToComare = players.get(0).chooseCardField();
 
         while (this.players.get(0).hasNext() && this.players.get(1).hasNext()) {
-            //++++++++++
-            queue++; //to remove
-            //++++++++++
-            System.out.println(queue);
-
             int result = 0;
+
             for (Player player : this.players) {
                 if (player.hasNext()) {
+                    player.getCards().get(0).setChoose(this.chooseToComare);
                     cartsToCompare.add(player.next());
                 }
             }
@@ -102,23 +92,30 @@ public class QuarterGame {
             if (result == 0 || result == 1) {
                 this.players.get(result).getCards().addAll(cardsInBuffer);
                 cardsInBuffer.clear();
+
+                if (result == 0) {
+                    view.println(String.format("%s win battle", players.get(0).getName()));
+                    this.chooseToComare = players.get(0).chooseCardField();
+                }
+                else {
+                    view.println(String.format("%s win battle", players.get(1).getName()));
+                    this.chooseToComare = players.get(1).chooseCardField();
+                }
+            }
+            else {
+                view.println("Draw");
             }
         }
 
         if (this.players.get(0).hasNext()) {
-            view.println("Player 1 win!!!");
+            view.println(String.format("%s win game!!!", players.get(0).getName()));
         }
         else {
-            view.println("Player 2 win!!!");
+            view.println(String.format("%s win game!!!", players.get(1).getName()));
         }
+    }
 
-//        Player bj = new UserPlayer("BJ", (ArrayList<Card>) deckFirstPlayer);
-//        bj.chooseCardField();
-
-//        System.out.println(deckFirstPlayer.toString());
-//        System.out.println(deckFirstPlayer.size());
-//        System.out.println(deckSecondPlayer.toString());
-//        System.out.println(deckSecondPlayer.size());
-
+    public int getChooseToComare() {
+        return chooseToComare;
     }
 }

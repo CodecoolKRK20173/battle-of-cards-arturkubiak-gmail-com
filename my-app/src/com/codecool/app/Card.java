@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Card {
     private String name;
-    private int first, second, third, fourth, fifth, sixth;
+    private int first, second, third, fourth, fifth, sixth, choose;
     /* for football players:
     private int pace, shooting, passing, dribbling, defending, physic; */
     private boolean isHidden;
@@ -22,6 +22,7 @@ public class Card {
         this.sixth = sixth;
         isHidden = true;
         createAttributeList();
+        this.choose = 0;
     }
 
     public boolean getIsHidden() {
@@ -101,6 +102,14 @@ public class Card {
             }
         }
         return counter;
+    }
+
+    public int getChoose() {
+        return choose;
+    }
+
+    public void setChoose(int choose) {
+        this.choose = choose;
     }
 
     @Override
