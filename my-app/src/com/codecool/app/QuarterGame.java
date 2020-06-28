@@ -73,6 +73,7 @@ public class QuarterGame {
         ArrayList<Card> cardsInBuffer =  new ArrayList<>();
         ArrayList<Card> cartsToCompare =  new ArrayList<>();
         ComparatorForGame comparator = new ComparatorForGame();
+        view.println(String.format("%s are choosing", players.get(0).getName()));
         this.chooseToComare = players.get(0).chooseCardField();
 
         while (this.players.get(0).hasNext() && this.players.get(1).hasNext()) {
@@ -95,10 +96,12 @@ public class QuarterGame {
 
                 if (result == 0) {
                     view.println(String.format("%s win battle", players.get(0).getName()));
+                    view.println(String.format("%s are choosing", players.get(0).getName()));
                     this.chooseToComare = players.get(0).chooseCardField();
                 }
                 else {
                     view.println(String.format("%s win battle", players.get(1).getName()));
+                    view.println(String.format("%s are choosing", players.get(1).getName()));
                     this.chooseToComare = players.get(1).chooseCardField();
                 }
             }

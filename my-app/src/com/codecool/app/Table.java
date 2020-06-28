@@ -136,7 +136,7 @@ public class Table {
     }
 
     private void launchGame(View view, Scanner scan) {
-        CardsSourceCSV cardSource = new CardsSourceCSV();
+            CardsSourceCSV cardSource = new CardsSourceCSV();
         List<List<String>> strCards = cardSource.getCardsDataFromFile("./src/resources/players_20_top200.csv");
         Deck deckOfCards = new Deck(this.countOfCard, strCards);
 
