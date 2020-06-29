@@ -8,7 +8,10 @@ public class QuarterGame {
     protected ArrayList<Card> deckToGame;
     protected List<Boolean> isUser;
     protected ArrayList<Player> players = new ArrayList<>();
-    int chooseToComare;
+    protected ArrayList<Card> cardsInBuffer =  new ArrayList<>();
+    protected ArrayList<Card> cartsToCompare =  new ArrayList<>();
+    protected int chooseToComare;
+    protected int result = 0;
 
     public QuarterGame(ArrayList<Card> deckToGame, List<Boolean> isUser) {
         this.deckToGame = deckToGame;
@@ -18,6 +21,9 @@ public class QuarterGame {
     void run(QuarterGame game, View view, Scanner scan) {
         ArrayList<ArrayList<Card>> separatedDeck = game.getCardsForPlayers(deckToGame);
         game.getPlayersObject(view, scan, separatedDeck);
+
+        view.println(String.format("%s are choosing", players.get(0).getName()));
+        this.chooseToComare = players.get(0).chooseCardField();
         game.quarter(view, game);
 
         this.players.clear();
@@ -54,59 +60,50 @@ public class QuarterGame {
     }
 
     protected void quarter(View view, QuarterGame game) {
-        ArrayList<Card> cardsInBuffer =  new ArrayList<>();
-        ArrayList<Card> cartsToCompare =  new ArrayList<>();
         ComparatorForGame comparator = new ComparatorForGame();
-        view.println(String.format("%s are choosing", players.get(0).getName()));
-        this.chooseToComare = players.get(0).chooseCardField();
 
-        while (this.players.get(0).hasNext() && this.players.get(1).hasNext()) {
-            int result = 0;
+        if (players.size() == 2) {
+            while (this.players.get(0).hasNext() && this.players.get(1).hasNext()) {
 
-            for (Player player : this.players) {
-                if (player.hasNext()) {
-                    player.getCards().get(0).setChoose(this.chooseToComare);
-                    cartsToCompare.add(player.next());
+                for (Player player : this.players) {
+                    if (player.hasNext()) {
+                        player.getCards().get(0).setChoose(this.chooseToComare);
+                        this.cartsToCompare.add(player.next());
+                    }
                 }
-            }
 
-            result = comparator.compare(cartsToCompare.get(0), cartsToCompare.get(1));
-            cardsInBuffer.addAll(cartsToCompare);
-            cartsToCompare.clear();
+                this.result = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
+                this.cardsInBuffer.addAll(this.cartsToCompare);
+                this.cartsToCompare.clear();
 
-            if (result == 0 || result == 1) {
-                this.players.get(result).getCards().addAll(cardsInBuffer);
-                cardsInBuffer.clear();
-
-                if (result == 0) {
-                    view.println(String.format("%s win battle", players.get(0).getName()));
+                if (this.result == 0 || this.result == 1) {
+                    this.players.get(this.result).getCards().addAll(this.cardsInBuffer);
+                    this.cardsInBuffer.clear();
+                    game.getChooseAfterWin(view, game);
+                } else {
+                    view.println("Draw");
                     game.quantityCardsOfPlayers(view);
-                    view.println(String.format("%s are choosing", players.get(0).getName()));
-                    this.chooseToComare = players.get(0).chooseCardField();
                 }
-                else {
-                    view.println(String.format("%s win battle", players.get(1).getName()));
-                    game.quantityCardsOfPlayers(view);
-                    view.println(String.format("%s are choosing", players.get(1).getName()));
-                    this.chooseToComare = players.get(1).chooseCardField();
-                }
-            }
-            else {
-                view.println("Draw");
-                game.quantityCardsOfPlayers(view);
             }
         }
-
-        if (this.players.get(0).hasNext()) {
+        if (this.players.get(1).hasNext()) {
+            view.println(String.format("%s win game!!!", players.get(1).getName()));
+        } else {
             view.println(String.format("%s win game!!!", players.get(0).getName()));
         }
-        else {
-            view.println(String.format("%s win game!!!", players.get(1).getName()));
-        }
+
+    }
+
+    protected void getChooseAfterWin(View view, QuarterGame game) {
+        view.println(String.format("%s win battle", players.get(this.result).getName()));
+        game.quantityCardsOfPlayers(view);
+        view.println(String.format("%s are choosing", players.get(this.result).getName()));
+        this.chooseToComare = players.get(result).chooseCardField();
     }
 
     protected void quantityCardsOfPlayers(View view) {
-        view.println(String.format("%s has %d Card's", this.players.get(0).getName(), this.players.get(0).getCards().size()));
-        view.println(String.format("%s has %d Card's", this.players.get(1).getName(), this.players.get(1).getCards().size()));
+        for (Player player : this.players) {
+            view.println(String.format("%s has %d Card's", player.getName(), player.getCards().size()));
+        }
     }
 }

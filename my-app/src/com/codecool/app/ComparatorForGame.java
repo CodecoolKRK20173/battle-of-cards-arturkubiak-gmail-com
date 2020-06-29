@@ -26,33 +26,29 @@ public class ComparatorForGame implements Comparator<Card> {
     public int compare(Card card1, Card card2, Card card3){
 
         if (card1.getAtribute(card1.getChoose()) > card2.getAtribute(card2.getChoose()) &&
-                (card1.getAtribute(card1.getChoose()) > card3.getAtribute(card2.getChoose()))) {
+                (card1.getAtribute(card1.getChoose()) > card3.getAtribute(card3.getChoose()))) {
             return FightResult.FIRST_WIN.ordinal();
         }
-        else if (card1.getAtribute(card2.getChoose()) > card1.getAtribute(card2.getChoose()) &&
-                (card1.getAtribute(card2.getChoose()) > card3.getAtribute(card2.getChoose()))) {
+        else if (card2.getAtribute(card2.getChoose()) > card1.getAtribute(card1.getChoose()) &&
+                (card2.getAtribute(card2.getChoose()) > card3.getAtribute(card3.getChoose()))) {
             return FightResult.SECOND_WIN.ordinal();
         }
-        else if (card1.getAtribute(card3.getChoose()) > card1.getAtribute(card2.getChoose()) &&
-                (card1.getAtribute(card3.getChoose()) > card2.getAtribute(card2.getChoose()))) {
+        else if (card3.getAtribute(card3.getChoose()) > card1.getAtribute(card1.getChoose()) &&
+                (card3.getAtribute(card3.getChoose()) > card2.getAtribute(card2.getChoose()))) {
             return FightResult.THIRD_WIN.ordinal();
         }
         else if (card1.getAtribute(card1.getChoose()) == card2.getAtribute(card2.getChoose()) &&
-                card1.getAtribute(card2.getChoose()) == card3.getAtribute(card2.getChoose())) {
+                card1.getAtribute(card1.getChoose()) == card3.getAtribute(card3.getChoose())) {
             return FightResult.WAR_1_2_3.ordinal();
         }
         else if (card1.getAtribute(card1.getChoose()) == card2.getAtribute(card2.getChoose())) {
             return FightResult.WAR_1_2.ordinal();
         }
-        else if (card1.getAtribute(card1.getChoose()) == card3.getAtribute(card2.getChoose())) {
+        else if (card1.getAtribute(card1.getChoose()) == card3.getAtribute(card3.getChoose())) {
             return FightResult.WAR_1_3.ordinal();
         }
-        else if (card1.getAtribute(card2.getChoose()) == card3.getAtribute(card2.getChoose())) {
+        else  {
             return FightResult.WAR_2_3.ordinal();
-        }
-        else {
-            //not used
-            return FightResult.SECOND_WIN.ordinal();
         }
     }
 

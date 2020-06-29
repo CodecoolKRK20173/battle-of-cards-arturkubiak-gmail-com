@@ -11,6 +11,118 @@ public class QuarterGameForThree extends QuarterGame {
 
     @Override
     protected void quarter(View view, QuarterGame game) {
+
+        while (this.players.get(0).hasNext() && this.players.get(1).hasNext() && this.players.get(2).hasNext()) {
+
+            if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 10) {
+                for (Player player : this.players) {
+                    player.getCards().get(0).setChoose(this.chooseToComare);
+                    this.cartsToCompare.add(player.next());
+                }
+            }
+            else {
+                if (result == 4) {
+                    this.players.get(0).getCards().get(0).setChoose(this.chooseToComare);
+                    this.players.get(1).getCards().get(0).setChoose(this.chooseToComare);
+                    this.cartsToCompare.add(this.players.get(0).next());
+                    this.cartsToCompare.add(this.players.get(1).next());
+                }
+                else if (result == 5) {
+                    this.players.get(0).getCards().get(0).setChoose(this.chooseToComare);
+                    this.players.get(2).getCards().get(0).setChoose(this.chooseToComare);
+                    this.cartsToCompare.add(this.players.get(0).next());
+                    this.cartsToCompare.add(this.players.get(2).next());
+                }
+                else {
+                    this.players.get(1).getCards().get(0).setChoose(this.chooseToComare);
+                    this.players.get(2).getCards().get(0).setChoose(this.chooseToComare);
+                    this.cartsToCompare.add(this.players.get(1).next());
+                    this.cartsToCompare.add(this.players.get(2).next());
+                }
+            }
+            getCompareResult();
+            addCartsToPlayers(view, game);
+        }
+        removePlayer();
+        super.quarter(view, game);
+    }
+
+    protected void addCartsToPlayers(View view, QuarterGame game) {
+        this.cardsInBuffer.addAll(this.cartsToCompare);
+        this.cartsToCompare.clear();
+
+        if (result == 0) {
+            this.players.get(0).getCards().addAll(this.cardsInBuffer);
+        }
+        else if (result == 1) {
+            this.players.get(1).getCards().addAll(this.cardsInBuffer);
+        }
+        else if (result == 2) {
+            this.players.get(2).getCards().addAll(this.cardsInBuffer);
+        }
+
+        if (result == 0 || result == 1 || result == 2) {
+            this.cardsInBuffer.clear();
+            game.getChooseAfterWin(view, game);
+        }
+        else {
+            view.println("Draw");
+            game.quantityCardsOfPlayers(view);
+        }
+    }
+
+    protected void getCompareResult() {
+        ComparatorForGame comparator = new ComparatorForGame();
+        int bufforResult = 0;
+
+        if (this.cartsToCompare.size() == 3) {
+            this.result = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1), this.cartsToCompare.get(2));
+        }
+        else {
+            if (this.result == 4) {
+                bufforResult = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
+            }
+            else if (this.result == 5) {
+                bufforResult = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(2));
+            }
+            else {
+                bufforResult = comparator.compare(this.cartsToCompare.get(1), this.cartsToCompare.get(2));
+            }
+        }
+        if (bufforResult == 0 && this.result == 4) {
+            this.result = 0;
+        }
+        else if (bufforResult == 1 && this.result == 4) {
+            this.result = 1;
+        }
+        else if (bufforResult == 0 && this.result == 5) {
+            this.result = 0;
+        }
+        else if (bufforResult == 1 && this.result == 5) {
+            this.result = 2;
+        }
+        else if (bufforResult == 0 && this.result == 7) {
+            this.result = 1;
+        }
+        else if (bufforResult == 1 && this.result == 7) {
+            this.result = 2;
+        }
+    }
+
+    protected void removePlayer() {
+        ArrayList<Player> bufforPlayers = new ArrayList<>();
+
+        for (Player player : this.players) {
+            if (player.hasNext()) {
+                bufforPlayers.add(player);
+            }
+        }
+        this.players.clear();
+        this.players.addAll(bufforPlayers);
+    }
+
+    /*
+    protected void quarter(View view, QuarterGame game) {
         ArrayList<Card> cardsInBuffer =  new ArrayList<>();
         ArrayList<Card> cartsToCompare =  new ArrayList<>();
         ComparatorForGame comparator = new ComparatorForGame();
@@ -46,7 +158,7 @@ public class QuarterGameForThree extends QuarterGame {
             }
 
 
-            if ((result == 0 || result == 1 || result == 2) && deckToGame.size() == 3) {
+            if ((result == 0 || result == 1 || result == 2) && players.size() == 3) {
                 result = comparator.compare(cartsToCompare.get(0), cartsToCompare.get(1), cartsToCompare.get(2));
             }
             else {
@@ -119,17 +231,14 @@ public class QuarterGameForThree extends QuarterGame {
                 game.quantityCardsOfPlayers(view);
             }
 
+
+
             for (int index = this.players.size(); index > 0; index--) {
-                if (!players.get(index).hasNext()) {
-                    players.remove(index);
+                if (!this.players.get(index).hasNext()) {
+                    this.players.remove(this.players.get(index));
                 }
             }
         }
-    }
+    }*/
 
-    @Override
-    protected void quantityCardsOfPlayers(View view) {
-        super.quantityCardsOfPlayers(view);
-        view.println(String.format("%s has %d Card's", this.players.get(2).getName(), this.players.get(2).getCards().size()));
-    }
 }
