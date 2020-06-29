@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class QuarterGame {
-    private ArrayList<Card> deckToGame;
-    private List<Boolean> isUser;
-    private ArrayList<Player> players = new ArrayList<>();
+    protected ArrayList<Card> deckToGame;
+    protected List<Boolean> isUser;
+    protected ArrayList<Player> players = new ArrayList<>();
     int chooseToComare;
 
     public QuarterGame(ArrayList<Card> deckToGame, List<Boolean> isUser) {
@@ -16,26 +16,8 @@ public class QuarterGame {
     }
 
     void run(QuarterGame game, View view, Scanner scan) {
-        ArrayList<ArrayList<Card>> decks = new ArrayList<>();
-        ArrayList<Card> deckFirstPlayer = new ArrayList<>();
-        ArrayList<Card> deckSecondPlayer = new ArrayList<>();
-        int sizeOfDeck = deckToGame.size();
-
-        for (int index = 0; index < sizeOfDeck; index++) {
-            Card card = this.deckToGame.get(0);
-            this.deckToGame.remove(this.deckToGame.get(0));
-
-            if (index % 2 == 0) {
-                deckFirstPlayer.add(card);
-            }
-            else {
-                deckSecondPlayer.add(card);
-            }
-            decks.add(deckFirstPlayer);
-            decks.add(deckSecondPlayer);
-        }
-
-        game.getPlayersObject(decks, view, scan);
+        ArrayList<ArrayList<Card>> separatedDeck = game.getCardsForPlayers(deckToGame);
+        game.getPlayersObject(view, scan, separatedDeck);
         game.quarter(view, game);
 
         this.players.clear();
@@ -43,21 +25,35 @@ public class QuarterGame {
         this.deckToGame.clear();
     }
 
-    private void getPlayersObject(ArrayList<ArrayList<Card>> decks, View view, Scanner scan) {
+    protected void getPlayersObject(View view, Scanner scan, ArrayList<ArrayList<Card>> separatedDeck) {
         for (int index = 0; index < isUser.size(); index++) {
             if (isUser.get(index)) {
                 view.print("Provide your name: ");
                 String name = scan.nextLine();
-                this.players.add(new UserPlayer(name, decks.get(index)));
+                this.players.add(new UserPlayer(name, separatedDeck.get(index)));
             }
             else {
                 String name = String.format("Enemy%d", index + 1);
-                this.players.add(new ComputerPlayer(name, decks.get(index)));
+                this.players.add(new ComputerPlayer(name, separatedDeck.get(index)));
             }
         }
     }
 
-    private void quarter(View view, QuarterGame game) {
+    protected ArrayList<ArrayList<Card>> getCardsForPlayers(ArrayList<Card> deckToGame) {
+        ArrayList<ArrayList<Card>> separatedDeck = new ArrayList<>();
+
+        for (int i = 0; i < isUser.size(); i++) {
+            ArrayList<Card> bufforList = new ArrayList<>();
+
+            for (int j = 0; j < this.deckToGame.size()/isUser.size(); j++) {
+                bufforList.add(deckToGame.get(i * this.deckToGame.size()/isUser.size() + j));
+            }
+            separatedDeck.add(bufforList);
+        }
+        return separatedDeck;
+    }
+
+    protected void quarter(View view, QuarterGame game) {
         ArrayList<Card> cardsInBuffer =  new ArrayList<>();
         ArrayList<Card> cartsToCompare =  new ArrayList<>();
         ComparatorForGame comparator = new ComparatorForGame();
@@ -109,12 +105,8 @@ public class QuarterGame {
         }
     }
 
-    private void quantityCardsOfPlayers(View view) {
+    protected void quantityCardsOfPlayers(View view) {
         view.println(String.format("%s has %d Card's", this.players.get(0).getName(), this.players.get(0).getCards().size()));
         view.println(String.format("%s has %d Card's", this.players.get(1).getName(), this.players.get(1).getCards().size()));
     }
-
-//    public int getChooseToComare() {
-//        return chooseToComare;
-//    }
 }

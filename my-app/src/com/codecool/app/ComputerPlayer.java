@@ -10,6 +10,7 @@ public class ComputerPlayer extends Player {
         Cards = cards;
     }
 
+
     @Override
     public int chooseCardField() {
         Card card = Cards.get(0);

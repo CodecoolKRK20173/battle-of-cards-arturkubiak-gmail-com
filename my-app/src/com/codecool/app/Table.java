@@ -145,7 +145,9 @@ public class Table {
             game.run(game, view, scan);
         }
         else if ((countOfPlayers == 3)) {
-            view.println("Option is not available. Sorry...");
+            QuarterGame game = new QuarterGameForThree((ArrayList<Card>) deckOfCards.getDeck(), this.isUser);
+            game.run(game, view, scan);
+            //view.println("Option is not available. Sorry...");
         }
         else {
             view.println("Option is not available. Sorry...");
