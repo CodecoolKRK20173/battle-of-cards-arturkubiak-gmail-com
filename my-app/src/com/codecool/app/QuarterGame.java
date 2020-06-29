@@ -36,7 +36,7 @@ public class QuarterGame {
         }
 
         game.getPlayersObject(decks, view, scan);
-        game.quarter(view);
+        game.quarter(view, game);
 
         this.players.clear();
         this.isUser.clear();
@@ -57,7 +57,7 @@ public class QuarterGame {
         }
     }
 
-    private void quarter(View view) {
+    private void quarter(View view, QuarterGame game) {
         ArrayList<Card> cardsInBuffer =  new ArrayList<>();
         ArrayList<Card> cartsToCompare =  new ArrayList<>();
         ComparatorForGame comparator = new ComparatorForGame();
@@ -84,17 +84,20 @@ public class QuarterGame {
 
                 if (result == 0) {
                     view.println(String.format("%s win battle", players.get(0).getName()));
+                    game.quantityCardsOfPlayers(view);
                     view.println(String.format("%s are choosing", players.get(0).getName()));
                     this.chooseToComare = players.get(0).chooseCardField();
                 }
                 else {
                     view.println(String.format("%s win battle", players.get(1).getName()));
+                    game.quantityCardsOfPlayers(view);
                     view.println(String.format("%s are choosing", players.get(1).getName()));
                     this.chooseToComare = players.get(1).chooseCardField();
                 }
             }
             else {
                 view.println("Draw");
+                game.quantityCardsOfPlayers(view);
             }
         }
 
@@ -106,7 +109,12 @@ public class QuarterGame {
         }
     }
 
-    public int getChooseToComare() {
-        return chooseToComare;
+    private void quantityCardsOfPlayers(View view) {
+        view.println(String.format("%s has %d Card's", this.players.get(0).getName(), this.players.get(0).getCards().size()));
+        view.println(String.format("%s has %d Card's", this.players.get(1).getName(), this.players.get(1).getCards().size()));
     }
+
+//    public int getChooseToComare() {
+//        return chooseToComare;
+//    }
 }
