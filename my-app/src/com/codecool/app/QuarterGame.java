@@ -63,7 +63,7 @@ public class QuarterGame {
         ComparatorForGame comparator = new ComparatorForGame();
 
         if (players.size() == 2) {
-            while (this.players.get(0).hasNext() && this.players.get(1).hasNext()) {
+            while (areEnoughPlayers()) {
 
                 for (Player player : this.players) {
                     if (player.hasNext()) {
@@ -86,12 +86,21 @@ public class QuarterGame {
                 }
             }
         }
-        if (this.players.get(1).hasNext()) {
-            view.println(String.format("%s win game!!!", players.get(1).getName()));
-        } else {
+        if (this.players.get(0).hasNext()) {
             view.println(String.format("%s win game!!!", players.get(0).getName()));
+        } else {
+            view.println(String.format("%s win game!!!", players.get(1).getName()));
         }
+    }
 
+    protected boolean areEnoughPlayers() {
+
+        for (Player player : this.players) {
+            if (!player.hasNext()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     protected void getChooseAfterWin(View view, QuarterGame game) {
