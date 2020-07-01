@@ -10,6 +10,7 @@ public class QuarterGame {
     protected ArrayList<Player> players = new ArrayList<>();
     protected ArrayList<Card> cardsInBuffer =  new ArrayList<>();
     protected ArrayList<Card> cartsToCompare =  new ArrayList<>();
+    protected ArrayList<Player> playersInGame = new ArrayList<>();
     protected int chooseToComare;
     protected int result = 0;
 
@@ -64,11 +65,13 @@ public class QuarterGame {
 
         if (players.size() == 2) {
             while (areEnoughPlayers()) {
+                game.presEnter(view);
 
                 for (Player player : this.players) {
                     if (player.hasNext()) {
                         player.getCards().get(0).setChoose(this.chooseToComare);
                         this.cartsToCompare.add(player.next());
+                        this.playersInGame.add(player);
                     }
                 }
 
@@ -84,6 +87,7 @@ public class QuarterGame {
                     view.println("Draw");
                     game.quantityCardsOfPlayers(view);
                 }
+                this.playersInGame.clear();
             }
         }
         if (this.players.get(0).hasNext()) {
@@ -91,6 +95,12 @@ public class QuarterGame {
         } else {
             view.println(String.format("%s win game!!!", players.get(1).getName()));
         }
+    }
+
+    protected void presEnter(View view) {
+        Scanner scan = new Scanner(System.in);
+        view.println("Press ENTER");
+        String pressing = scan.nextLine();
     }
 
     protected boolean areEnoughPlayers() {

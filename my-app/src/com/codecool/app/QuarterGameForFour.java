@@ -13,10 +13,13 @@ public class QuarterGameForFour extends QuarterGameForThree {
     protected void quarter(View view, QuarterGame game) {
 
         while (game.areEnoughPlayers()) {
+            game.presEnter(view);
+
             if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 3 || this.result == 14) {
                 for (Player player : this.players) {
                     player.getCards().get(0).setChoose(this.chooseToComare);
                     this.cartsToCompare.add(player.next());
+                    this.playersInGame.add(player);
                 }
             }
             else if (this.result == 4 || this.result == 5 || this.result == 7) {
@@ -35,55 +38,63 @@ public class QuarterGameForFour extends QuarterGameForThree {
 
     @Override
     protected void addCardsToCompareIfDraw(int result) {
+        int []tab;
+
         if (result == 6) {
-            this.players.get(0).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(3).getCards().get(0).setChoose(this.chooseToComare);
-            this.cartsToCompare.add(this.players.get(0).next());
-            this.cartsToCompare.add(this.players.get(3).next());
+            tab = new int[]{0, 3};
+            for (int value : tab) {
+                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+                this.playersInGame.add(players.get(value));
+                this.cartsToCompare.add(this.players.get(value).next());
+            }
         }
         else if (result == 8) {
-            this.players.get(1).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(3).getCards().get(0).setChoose(this.chooseToComare);
-            this.cartsToCompare.add(this.players.get(1).next());
-            this.cartsToCompare.add(this.players.get(3).next());
+            tab = new int[]{1, 3};
+            for (int value : tab) {
+                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+                this.playersInGame.add(players.get(value));
+                this.cartsToCompare.add(this.players.get(value).next());
+            }
         }
         else if (result == 9) {
-            this.players.get(2).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(3).getCards().get(0).setChoose(this.chooseToComare);
-            this.cartsToCompare.add(this.players.get(2).next());
-            this.cartsToCompare.add(this.players.get(3).next());
+            tab = new int[]{2, 3};
+            for (int value : tab) {
+                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+                this.playersInGame.add(players.get(value));
+                this.cartsToCompare.add(this.players.get(value).next());
+            }
         }
         else if (result == 10) {
-            this.players.get(0).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(1).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(2).getCards().get(0).setChoose(this.chooseToComare);
-            this.cartsToCompare.add(this.players.get(0).next());
-            this.cartsToCompare.add(this.players.get(1).next());
-            this.cartsToCompare.add(this.players.get(2).next());
+            tab = new int[]{0, 1, 2};
+            for (int value : tab) {
+                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+                this.playersInGame.add(players.get(value));
+                this.cartsToCompare.add(this.players.get(value).next());
+            }
         }
         else if (result == 11) {
-            this.players.get(0).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(1).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(3).getCards().get(0).setChoose(this.chooseToComare);
-            this.cartsToCompare.add(this.players.get(0).next());
-            this.cartsToCompare.add(this.players.get(1).next());
-            this.cartsToCompare.add(this.players.get(3).next());
+            tab = new int[]{0, 1, 3};
+            for (int value : tab) {
+                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+                this.playersInGame.add(players.get(value));
+                this.cartsToCompare.add(this.players.get(value).next());
+            }
         }
         else if (result == 12) {
-            this.players.get(0).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(2).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(3).getCards().get(0).setChoose(this.chooseToComare);
-            this.cartsToCompare.add(this.players.get(0).next());
-            this.cartsToCompare.add(this.players.get(2).next());
-            this.cartsToCompare.add(this.players.get(3).next());
+            tab = new int[]{0, 2, 3};
+            for (int value : tab) {
+                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+                this.playersInGame.add(players.get(value));
+                this.cartsToCompare.add(this.players.get(value).next());
+            }
         }
         else {
-            this.players.get(1).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(2).getCards().get(0).setChoose(this.chooseToComare);
-            this.players.get(3).getCards().get(0).setChoose(this.chooseToComare);
-            this.cartsToCompare.add(this.players.get(1).next());
-            this.cartsToCompare.add(this.players.get(2).next());
-            this.cartsToCompare.add(this.players.get(3).next());
+            tab = new int[]{1, 2, 3};
+            for (int value : tab) {
+                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+                this.playersInGame.add(players.get(value));
+                this.cartsToCompare.add(this.players.get(value).next());
+            }
         }
     }
 

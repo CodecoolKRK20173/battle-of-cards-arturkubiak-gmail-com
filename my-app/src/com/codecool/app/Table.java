@@ -151,7 +151,6 @@ public class Table {
         else {
             QuarterGame game = new QuarterGameForFour((ArrayList<Card>) deckOfCards.getDeck(), this.isUser);
             game.run(game, view, scan);
-            //view.println("Option is not available. Sorry...");
         }
     }
 
