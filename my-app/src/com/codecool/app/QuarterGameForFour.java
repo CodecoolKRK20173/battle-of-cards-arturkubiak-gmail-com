@@ -13,7 +13,7 @@ public class QuarterGameForFour extends QuarterGameForThree {
     protected void quarter(View view, QuarterGame game) {
 
         while (game.areEnoughPlayers()) {
-            game.presEnter(view);
+            game.pressEnter(view);
 
             if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 3 || this.result == 14) {
                 for (Player player : this.players) {

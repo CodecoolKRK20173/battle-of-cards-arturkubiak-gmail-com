@@ -62,7 +62,7 @@ public class QuarterGame {
 
         if (players.size() == 2) {
             while (areEnoughPlayers()) {
-                game.presEnter(view);
+                game.pressEnter(view);
 
                 for (Player player : this.players) {
                     if (player.hasNext()) {
@@ -103,7 +103,7 @@ public class QuarterGame {
         }
     }
 
-    protected void presEnter(View view) {
+    protected void pressEnter(View view) {
         Scanner scan = new Scanner(System.in);
         view.println("Press ENTER");
         String pressing = scan.nextLine();
