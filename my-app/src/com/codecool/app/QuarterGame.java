@@ -23,10 +23,6 @@ public class QuarterGame {
         ArrayList<ArrayList<Card>> separatedDeck = game.getCardsForPlayers(deckToGame);
         game.getPlayersObject(view, scan, separatedDeck);
 
-        view.println(String.format("%s are choosing", players.get(0).getName()));
-        this.chooseToComare = players.get(0).chooseCardField();
-        game.quarter(view, game);
-
         this.players.clear();
         this.isUser.clear();
         this.deckToGame.clear();
@@ -69,6 +65,11 @@ public class QuarterGame {
 
                 for (Player player : this.players) {
                     if (player.hasNext()) {
+
+                        GameBoard newBoard = new GameBoard();
+                        PrintBoard newPrint = new PrintBoard(newBoard.createChoiceBoard(player));
+                        newPrint.displayBoard();
+
                         player.getCards().get(0).setChoose(this.chooseToComare);
                         this.cartsToCompare.add(player.next());
                         this.playersInGame.add(player);
@@ -78,6 +79,10 @@ public class QuarterGame {
                 this.result = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
                 this.cardsInBuffer.addAll(this.cartsToCompare);
                 this.cartsToCompare.clear();
+
+                GameBoard gameBoard = new GameBoard();
+                PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame));
+                newPrint.displayBoard();
 
                 if (this.result == 0 || this.result == 1) {
                     this.players.get(this.result).getCards().addAll(this.cardsInBuffer);
