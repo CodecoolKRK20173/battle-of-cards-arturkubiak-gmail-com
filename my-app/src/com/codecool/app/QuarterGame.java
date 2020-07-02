@@ -22,6 +22,7 @@ public class QuarterGame {
     void run(QuarterGame game, View view, Scanner scan) {
         ArrayList<ArrayList<Card>> separatedDeck = game.getCardsForPlayers(deckToGame);
         game.getPlayersObject(view, scan, separatedDeck);
+        game.quarter(view, game);
 
         this.players.clear();
         this.isUser.clear();
