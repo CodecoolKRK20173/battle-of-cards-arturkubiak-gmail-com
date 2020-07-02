@@ -60,8 +60,6 @@ public class UserPlayer extends Player {
         System.out.println(card.toString());
         int choosenField = getField();
         System.out.println("User choose field: " + choosenField);
-//        System.out.println(card.getAtribute(choosenField));
         return  choosenField;
-//        return card.getBiggestField();
     }
 }
