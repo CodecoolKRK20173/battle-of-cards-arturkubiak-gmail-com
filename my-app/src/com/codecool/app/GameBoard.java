@@ -8,7 +8,7 @@ public class GameBoard {
     int choiceBoardWidth = 21;
     String footballTitle = "BATTLE OF CARDS: FOOTBALL";
 
-    public List<String> createFullBoard(ArrayList<Player> players) {
+    public List<String> createFullBoard(ArrayList<Player> players, ArrayList<Card> usedCards) {
         List<String> newBoard = new ArrayList<>();
 
         newBoard.add(createHorizontalBorderLine(boardWidth));
@@ -24,17 +24,13 @@ public class GameBoard {
         newBoard.add(createEmptyStatLine("^"));
         newBoard.add(createHorizontalBorderLine(boardWidth));
         newBoard.add(createEmptyStatLine("%"));
-        newBoard.add(createDoubleTextLine(players.get(0).getCards().get(0).getName(),
-                players.get(1).getCards().get(0).getName(), "%"));
+        newBoard.add(createDoubleTextLine(usedCards.get(0).getName(), usedCards.get(1).getName(), "%"));
         newBoard.add(createEmptyStatLine("%"));
-        newBoard.add(createCardStatLine(players.get(0).getCards().get(0),
-                players.get(1).getCards().get(0), 1, "%"));
+        newBoard.add(createCardStatLine(usedCards.get(0), usedCards.get(1), 1, "%"));
         newBoard.add(createEmptyStatLine("%"));
-        newBoard.add(createCardStatLine(players.get(0).getCards().get(0),
-                players.get(1).getCards().get(0), 2, "%"));
+        newBoard.add(createCardStatLine(usedCards.get(0), usedCards.get(1), 2, "%"));
         newBoard.add(createEmptyStatLine("%"));
-        newBoard.add(createCardStatLine(players.get(0).getCards().get(0),
-                players.get(1).getCards().get(0), 3, "%"));
+        newBoard.add(createCardStatLine(usedCards.get(0), usedCards.get(1), 3, "%"));
         newBoard.add(createEmptyStatLine("%"));
         newBoard.add(createHorizontalBorderLine(boardWidth));
 
@@ -45,13 +41,13 @@ public class GameBoard {
             newBoard.add(createEmptyStatLine("^"));
             newBoard.add(createHorizontalBorderLine(boardWidth));
             newBoard.add(createEmptyStatLine("%"));
-            newBoard.add(createHalfTextLine(players.get(2).getCards().get(0).getName(), "%"));
+            newBoard.add(createHalfTextLine(usedCards.get(2).getName(), "%"));
             newBoard.add(createEmptyStatLine("%"));
-            newBoard.add(createHalfCardStatLine(players.get(2).getCards().get(0), 1, "%"));
+            newBoard.add(createHalfCardStatLine(usedCards.get(2), 1, "%"));
             newBoard.add(createEmptyStatLine("%"));
-            newBoard.add(createHalfCardStatLine(players.get(2).getCards().get(0), 2, "%"));
+            newBoard.add(createHalfCardStatLine(usedCards.get(2), 2, "%"));
             newBoard.add(createEmptyStatLine("%"));
-            newBoard.add(createHalfCardStatLine(players.get(2).getCards().get(0), 3, "%"));
+            newBoard.add(createHalfCardStatLine(usedCards.get(2), 3, "%"));
             newBoard.add(createEmptyStatLine("%"));
             newBoard.add(createHorizontalBorderLine(boardWidth));
         }
@@ -65,17 +61,13 @@ public class GameBoard {
             newBoard.add(createEmptyStatLine("^"));
             newBoard.add(createHorizontalBorderLine(boardWidth));
             newBoard.add(createEmptyStatLine("%"));
-            newBoard.add(createDoubleTextLine(players.get(2).getCards().get(0).getName(),
-                    players.get(3).getCards().get(0).getName(), "%"));
+            newBoard.add(createDoubleTextLine(usedCards.get(2).getName(), usedCards.get(3).getName(), "%"));
             newBoard.add(createEmptyStatLine("%"));
-            newBoard.add(createCardStatLine(players.get(2).getCards().get(0),
-                    players.get(3).getCards().get(0), 1, "%"));
+            newBoard.add(createCardStatLine(usedCards.get(2), usedCards.get(3), 1, "%"));
             newBoard.add(createEmptyStatLine("%"));
-            newBoard.add(createCardStatLine(players.get(2).getCards().get(0),
-                    players.get(3).getCards().get(0), 2, "%"));
+            newBoard.add(createCardStatLine(usedCards.get(2), usedCards.get(3), 2, "%"));
             newBoard.add(createEmptyStatLine("%"));
-            newBoard.add(createCardStatLine(players.get(2).getCards().get(0),
-                    players.get(3).getCards().get(0), 3, "%"));
+            newBoard.add(createCardStatLine(usedCards.get(2), usedCards.get(3), 3, "%"));
             newBoard.add(createEmptyStatLine("%"));
             newBoard.add(createHorizontalBorderLine(boardWidth));
         }

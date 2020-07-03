@@ -66,11 +66,6 @@ public class QuarterGame {
 
                 for (Player player : this.players) {
                     if (player.hasNext()) {
-
-                        GameBoard newBoard = new GameBoard();
-                        PrintBoard newPrint = new PrintBoard(newBoard.createChoiceBoard(player));
-                        newPrint.displayBoard();
-
                         player.getCards().get(0).setChoose(this.chooseToComare);
                         this.cartsToCompare.add(player.next());
                         this.playersInGame.add(player);
@@ -78,18 +73,30 @@ public class QuarterGame {
                 }
 
                 this.result = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
+
+                ArrayList<Card> lastUsedCards = new ArrayList<>();
+                for (Card card : cartsToCompare) {
+                    lastUsedCards.add(card);
+                }
+
                 this.cardsInBuffer.addAll(this.cartsToCompare);
                 this.cartsToCompare.clear();
-
-                GameBoard gameBoard = new GameBoard();
-                PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame));
-                newPrint.displayBoard();
 
                 if (this.result == 0 || this.result == 1) {
                     this.players.get(this.result).getCards().addAll(this.cardsInBuffer);
                     this.cardsInBuffer.clear();
+                    if(playersInGame.size() > 1) {
+                        GameBoard gameBoard = new GameBoard();
+                        PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
+                        newPrint.displayBoard();
+                    }
                     game.getChooseAfterWin(view, game);
                 } else {
+                    if(playersInGame.size() > 1) {
+                        GameBoard gameBoard = new GameBoard();
+                        PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
+                        newPrint.displayBoard();
+                    }
                     view.println("Draw");
                     game.quantityCardsOfPlayers(view);
                 }
