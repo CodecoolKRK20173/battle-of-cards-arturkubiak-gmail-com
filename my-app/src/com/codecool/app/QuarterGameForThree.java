@@ -12,24 +12,22 @@ public class QuarterGameForThree extends QuarterGame {
     @Override
     protected void quarter(View view, QuarterGame game) {
 
-        if (this.players.size() == 3) {
+        while (this.players.size() == 3) {
+            game.pressEnter(view);
 
-            while (game.areEnoughPlayers()) {
-                game.pressEnter(view);
-
-                if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 10) {
-                    for (Player player : this.players) {
-                        player.getCards().get(0).setChoose(this.chooseToComare);
-                        this.cartsToCompare.add(player.next());
-                        this.playersInGame.add(player);
-                    }
+            if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 10) {
+                for (Player player : this.players) {
+                    player.getCards().get(0).setChoose(this.chooseToComare);
+                    this.cartsToCompare.add(player.next());
+                    this.playersInGame.add(player);
                 }
-                else {
-                    addCardsToCompareIfDraw(this.result);
-                }
-                getCompareResult();
-                addCartsToPlayers(view, game);
             }
+            else {
+                addCardsToCompareIfDraw(this.result);
+            }
+            getCompareResult();
+            addCartsToPlayers(view, game);
+            removePlayer();
         }
         afterBreakLoop(view, game);
     }
@@ -126,7 +124,6 @@ public class QuarterGameForThree extends QuarterGame {
     }
 
     protected void afterBreakLoop(View view, QuarterGame game) {
-        removePlayer();
         super.cardsInBuffer.addAll(this.cardsInBuffer);
         super.quarter(view, game);
     }

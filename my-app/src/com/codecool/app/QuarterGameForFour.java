@@ -12,7 +12,7 @@ public class QuarterGameForFour extends QuarterGameForThree {
     @Override
     protected void quarter(View view, QuarterGame game) {
 
-        while (game.areEnoughPlayers()) {
+        while (this.players.size() == 4) {
             game.pressEnter(view);
 
             if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 3 || this.result == 14) {
@@ -21,17 +21,16 @@ public class QuarterGameForFour extends QuarterGameForThree {
                     this.cartsToCompare.add(player.next());
                     this.playersInGame.add(player);
                 }
-            }
-            else if (this.result == 4 || this.result == 5 || this.result == 7) {
+            } else if (this.result == 4 || this.result == 5 || this.result == 7) {
                 super.addCardsToCompareIfDraw(this.result);
-            }
-            else {
+            } else {
                 addCardsToCompareIfDraw(this.result);
             }
             getCompareResult();
             addCartsToPlayers(view, game);
+            removePlayer();
         }
-        removePlayer();
+
         super.cardsInBuffer.addAll(this.cardsInBuffer);
         super.quarter(view, game);
     }
@@ -110,7 +109,7 @@ public class QuarterGameForFour extends QuarterGameForThree {
                                              this.cartsToCompare.get(3));
         }
         else {
-            if (this.result == 4 || this.result == 5 || this.result == 7 || this.result == 10) {
+            if (this.result == 4 || this.result == 5 || this.result == 7) {
                 super.getCompareResult();
             }
             else if (this.result == 6 || this.result == 8 || this.result == 9) {
@@ -138,6 +137,24 @@ public class QuarterGameForFour extends QuarterGameForThree {
         }
         else if (bufforResult == 1 && this.result == 9) {
             this.result = 3;
+        }
+        else if (bufforResult == 0 && this.result == 10) {
+            this.result = 0;
+        }
+        else if (bufforResult == 1 && this.result == 10) {
+            this.result = 1;
+        }
+        else if (bufforResult == 2 && this.result == 10) {
+            this.result = 2;
+        }
+        else if (bufforResult == 4 && this.result == 10) {
+            this.result = 4;
+        }
+        else if (bufforResult == 5 && this.result == 10) {
+            this.result = 5;
+        }
+        else if (bufforResult == 7 && this.result == 10) {
+            this.result = 7;
         }
         else if (bufforResult == 0 && this.result == 11) {
             this.result = 0;
