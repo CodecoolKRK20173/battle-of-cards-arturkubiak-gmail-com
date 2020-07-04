@@ -15,8 +15,14 @@ public class ComputerPlayer extends Player {
     public int chooseCardField() {
         Card card = Cards.get(0);
 
-        System.out.println(card.toString());
-        System.out.println("Computer choose field: " + card.getBiggestField());
-        return card.getBiggestField();
+        GameBoard gameBoard = new GameBoard();
+        PrintBoard newPrint = new PrintBoard(gameBoard.createChoiceBoard(Name, Cards, card));
+        newPrint.displayBoard();
+
+        int biggestField = card.getBiggestField();
+
+        // System.out.println(card.toString());
+        System.out.println("Number of picked statistic: " + (biggestField + 1));
+        return biggestField;
     }
 }

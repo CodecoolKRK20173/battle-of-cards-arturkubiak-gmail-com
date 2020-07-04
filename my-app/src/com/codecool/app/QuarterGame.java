@@ -22,6 +22,7 @@ public class QuarterGame {
     void run(QuarterGame game, View view, Scanner scan) {
         ArrayList<ArrayList<Card>> separatedDeck = game.getCardsForPlayers(deckToGame);
         game.getPlayersObject(view, scan, separatedDeck);
+        this.chooseToComare = players.get(0).chooseCardField();
         game.quarter(view, game);
 
         this.players.clear();
@@ -98,7 +99,7 @@ public class QuarterGame {
                         newPrint.displayBoard();
                     }
                     view.println("Draw");
-                    game.quantityCardsOfPlayers(view);
+                    // game.quantityCardsOfPlayers(view);
                 }
                 this.playersInGame.clear();
             }
@@ -127,9 +128,10 @@ public class QuarterGame {
     }
 
     protected void getChooseAfterWin(View view, QuarterGame game) {
-        view.println(String.format("%s win battle", players.get(this.result).getName()));
-        game.quantityCardsOfPlayers(view);
-        view.println(String.format("%s are choosing", players.get(this.result).getName()));
+        view.println(String.format("%s wins battle", players.get(this.result).getName()));
+        // game.quantityCardsOfPlayers(view);
+        System.out.println(" ");
+        view.println(String.format("%s, pick statistic you want to play:", players.get(this.result).getName()));
         this.chooseToComare = players.get(result).chooseCardField();
     }
 

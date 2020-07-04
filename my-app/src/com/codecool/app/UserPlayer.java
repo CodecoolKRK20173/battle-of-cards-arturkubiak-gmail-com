@@ -1,5 +1,6 @@
 package com.codecool.app;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,7 +12,6 @@ public class UserPlayer extends Player {
         Cards = cards;
     }
 
-
     private int getField() {
         boolean isRun = true;
         int choosenfiel = 0;
@@ -22,7 +22,7 @@ public class UserPlayer extends Player {
             String option = scan.nextLine().toUpperCase().trim();
             int choosenCorrect = 1;
 
-            if (option.equals("ONE") || option.equals("PACE") || option.equals("P") || option.equals("1")) {
+            if (option.equals("ONE") || option.equals("PACE") || option.equals("PAC") || option.equals("1")) {
                 choosenfiel = 1 - choosenCorrect;
                 return choosenfiel;
             }
@@ -56,10 +56,30 @@ public class UserPlayer extends Player {
     @Override
     public int chooseCardField() {
         Card card = Cards.get(0);
-        System.out.println("User choose:");
-        System.out.println(card.toString());
+        // System.out.println("User choose:");
+        // System.out.println(card.toString());
+
+        GameBoard gameBoard = new GameBoard();
+        PrintBoard newPrint = new PrintBoard(gameBoard.createChoiceBoard(Name, Cards, card));
+        newPrint.displayBoard();
+
         int choosenField = getField();
-        System.out.println("User choose field: " + choosenField);
+
+//        if(choosenField == 1) {
+//            System.out.println("User picks PACE");
+//        } else if(choosenField == 2) {
+//            System.out.println("User picks SHOOTING");
+//        } else if(choosenField == 3) {
+//            System.out.println("User picks PASSING");
+//        } else if(choosenField == 4) {
+//            System.out.println("User picks DRIBBLING");
+//        } else if(choosenField == 5) {
+//            System.out.println("User picks DEFENCE");
+//        } else if(choosenField == 6) {
+//            System.out.println("User picks PHYSIC");
+//        }
+
+        System.out.println("Number of picked statistic: " + (choosenField + 1));
         return  choosenField;
     }
 }

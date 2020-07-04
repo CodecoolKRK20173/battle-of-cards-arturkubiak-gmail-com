@@ -13,7 +13,7 @@ public class GameBoard {
 
         newBoard.add(createHorizontalBorderLine(boardWidth));
         newBoard.add(createEmptyLine(boardWidth, "@"));
-        newBoard.add(createSingleTextLine(footballTitle, boardWidth));
+        newBoard.add(createSingleTextLine(footballTitle, boardWidth, "@"));
         newBoard.add(createEmptyLine(boardWidth, "@"));
         newBoard.add(createHorizontalBorderLine(boardWidth));
         newBoard.add(createEmptyStatLine("^"));
@@ -75,28 +75,27 @@ public class GameBoard {
         return newBoard;
     }
 
-    public List<String> createChoiceBoard(Player player) {
+    public List<String> createChoiceBoard(String name, ArrayList<Card> deck, Card card) {
         List<String> newBoard = new ArrayList<>();
 
         newBoard.add(createHorizontalBorderLine(choiceBoardWidth));
         newBoard.add(createEmptyLine(choiceBoardWidth, "@"));
-        newBoard.add(createSingleTextLine("STAT CHOICE BOARD", choiceBoardWidth));
+        newBoard.add(createSingleTextLine("STAT CHOICE BOARD", choiceBoardWidth, "@"));
         newBoard.add(createEmptyLine(choiceBoardWidth, "@"));
         newBoard.add(createHorizontalBorderLine(choiceBoardWidth));
         newBoard.add(createEmptyLine(choiceBoardWidth, "^"));
-        newBoard.add(createSingleTextLine(player.getName(), choiceBoardWidth));
-        newBoard.add(createEmptyLine(choiceBoardWidth, "^"));
-        newBoard.add(createSingleTextLine("deck size: " + player.getCards().size(), choiceBoardWidth));
+        newBoard.add(createSingleTextLine(name.toUpperCase(), choiceBoardWidth, "^"));
+        newBoard.add(createSingleTextLine("deck size: " + deck.size(), choiceBoardWidth, "^"));
         newBoard.add(createEmptyLine(choiceBoardWidth, "^"));
         newBoard.add(createHorizontalBorderLine(choiceBoardWidth));
         newBoard.add(createEmptyLine(choiceBoardWidth, "%"));
-        newBoard.add(createSingleTextLine(player.getCards().get(0).getName(), choiceBoardWidth));
+        newBoard.add(createSingleTextLine(card.getName(), choiceBoardWidth, "%"));
         newBoard.add(createEmptyLine(choiceBoardWidth, "%"));
-        newBoard.add(createChoiceStatLine(player.getCards().get(0), 1, "%"));
+        newBoard.add(createChoiceStatLine(card, 1, "%"));
         newBoard.add(createEmptyLine(choiceBoardWidth, "%"));
-        newBoard.add(createChoiceStatLine(player.getCards().get(0), 2, "%"));
+        newBoard.add(createChoiceStatLine(card, 2, "%"));
         newBoard.add(createEmptyLine(choiceBoardWidth, "%"));
-        newBoard.add(createChoiceStatLine(player.getCards().get(0), 3, "%"));
+        newBoard.add(createChoiceStatLine(card, 3, "%"));
         newBoard.add(createEmptyLine(choiceBoardWidth, "%"));
         newBoard.add(createHorizontalBorderLine(choiceBoardWidth));
 
@@ -129,17 +128,17 @@ public class GameBoard {
         return headlineEmptyLine.toString();
     }
 
-    private String createSingleTextLine(String headline, int width) {
+    private String createSingleTextLine(String headline, int width, String filler) {
         int widthWithoutBorders = width - 2;
         StringBuilder headlineLine = new StringBuilder();
 
         headlineLine.append("*");
         for(int i = 0; i < ((widthWithoutBorders - headline.length()) / 2); i++) {
-            headlineLine.append("@");
+            headlineLine.append(filler);
         }
         headlineLine.append(headline);
         for(int i = 0; i < (widthWithoutBorders - headline.length() - ((widthWithoutBorders - headline.length()) / 2)); i++) {
-            headlineLine.append("@");
+            headlineLine.append(filler);
         }
         headlineLine.append("*");
 

@@ -1,0 +1,18 @@
+Welcome to the BATTLE OF CARDS: FOOTBALL game! Here are some instructions, rules and tips for you:
+1.Minimum number of players is 2, maximum is 4.
+2.Each player can be set up as a real player or computer player.
+3.Available game variants provide decks with 24 or 60 cards.
+4.Cards are drawn from among 200 available in the base - they can be repeated.
+5.Each card has its name and 6 statistics used during the game.
+6.The player starting the game chooses one of 6 statistics, which is then compared with the same parameter placed on rivals' cards.
+7.In each round, the statistics that will be used for comparison are selected by the winner of the last round.
+8.In case of draw:
+-the cards from the previous round go to the buffer,
+-the next cards are taken from the deck of players who have drawn the previous round,
+-new cards are compared according to the same category as in the previous round,
+-the winner takes both new cards and cards from the buffer.
+9.Choosing the highest stats from those on the card is not always the best tactic!
+10.Some statistics are rated high on a smaller number of cards than others - during the game you will find out which statistics.
+11.The computer already knows which statistics are at stake and is quite good at using this knowledge!
+12.The game ends when one player has all the cards from the deck.
+HAVE A GOOD FUN! :)
