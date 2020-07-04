@@ -90,6 +90,7 @@ public class QuarterGame {
                     this.cardsInBuffer.clear();
                     if(playersInGame.size() > 1) {
                         GameBoard gameBoard = new GameBoard();
+                        view.clearScreen();
                         PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
                         newPrint.displayBoard();
                     }
@@ -97,6 +98,7 @@ public class QuarterGame {
                 } else {
                     if(playersInGame.size() > 1) {
                         GameBoard gameBoard = new GameBoard();
+                        view.clearScreen();
                         PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
                         newPrint.displayBoard();
                     }
