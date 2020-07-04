@@ -3,8 +3,6 @@ package com.codecool.app;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import java.util.Comparator;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ComparatorForGameTest {
@@ -12,7 +10,7 @@ class ComparatorForGameTest {
     private Card card2 = new Card("Dao", 8, 9, 9, 9, 9, 9);
     private Card card3 = new Card("Mess", 2, 2, 10, 2, 2, 2);
     private Card card4 = new Card("Mess", 9, 2, 2, 2, 2, 9);
-    private Comparator comparator = new ComparatorForGame();
+    private ComparatorQuarter comparator = new ComparatorForGame();
 
 
     @Test
@@ -25,7 +23,9 @@ class ComparatorForGameTest {
         assertAll((Executable) () -> assertEquals(0, comparator.compare(card1, card2)),
                 (Executable) () -> assertEquals(0, comparator.compare(card2, card3)),
                 (Executable) () -> assertEquals(0, comparator.compare(card2, card3)),
-                (Executable) () -> assertEquals(0, comparator.compare(card4, card2)));
+                (Executable) () -> assertEquals(0, comparator.compare(card4, card2)),
+                (Executable) () -> assertEquals(0, comparator.compare(card4, card2, card3)),
+                (Executable) () -> assertEquals(0, comparator.compare(card1, card2, card3, card4)));
     }
 
     @Test
@@ -38,7 +38,9 @@ class ComparatorForGameTest {
         assertAll((Executable) () -> assertEquals(1, comparator.compare(card1, card2)),
                 (Executable) () -> assertEquals(1, comparator.compare(card2, card3)),
                 (Executable) () -> assertEquals(1, comparator.compare(card1, card4)),
-                (Executable) () -> assertEquals(1, comparator.compare(card1, card3)));
+                (Executable) () -> assertEquals(1, comparator.compare(card1, card3)),
+                (Executable) () -> assertEquals(1, comparator.compare(card2, card3, card1)),
+                (Executable) () -> assertEquals(1, comparator.compare(card1, card3, card2, card4)));
     }
 
     @Test
@@ -51,6 +53,8 @@ class ComparatorForGameTest {
         assertAll((Executable) () -> assertEquals(4, comparator.compare(card1, card3)),
                 (Executable) () -> assertEquals(4, comparator.compare(card2, card4)),
                 (Executable) () -> assertNotEquals(4, comparator.compare(card1, card4)),
-                (Executable) () -> assertNotEquals(1, comparator.compare(card2, card3)));
+                (Executable) () -> assertNotEquals(1, comparator.compare(card2, card3)),
+                (Executable) () -> assertEquals(5, comparator.compare(card2, card3, card4)),
+                (Executable) () -> assertEquals(8, comparator.compare(card1, card2, card3, card4)));
     }
 }

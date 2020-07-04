@@ -2,7 +2,6 @@ package com.codecool.app;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class QuarterGame {
     protected ArrayList<Card> deckToGame;
@@ -63,56 +62,60 @@ public class QuarterGame {
     protected void quarter() {
         ComparatorForGame comparator = new ComparatorForGame();
 
-        if (players.size() == 2) {
-            while (areEnoughPlayers()) {
-                view.pressEnter();
+        while (players.size() == 2) {
+            view.pressEnter();
+            addCartFromAllPlayers();
+            this.result = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
 
-                for (Player player : this.players) {
-                    if (player.hasNext()) {
-                        player.getCards().get(0).setChoose(this.chooseToComare);
-                        this.cartsToCompare.add(player.next());
-                        this.playersInGame.add(player);
-                    }
-                }
-
-                this.result = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
-
-                ArrayList<Card> lastUsedCards = new ArrayList<>();
-                for (Card card : cartsToCompare) {
-                    lastUsedCards.add(card);
-                }
-
-                this.cardsInBuffer.addAll(this.cartsToCompare);
-                this.cartsToCompare.clear();
-
-                if (this.result == 0 || this.result == 1) {
-                    this.players.get(this.result).getCards().addAll(this.cardsInBuffer);
-                    this.cardsInBuffer.clear();
-                    if(playersInGame.size() > 1) {
-                        GameBoard gameBoard = new GameBoard();
-                        view.clearScreen();
-                        PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
-                        newPrint.displayBoard();
-                    }
-                    getChooseAfterWin();
-                } else {
-                    if(playersInGame.size() > 1) {
-                        GameBoard gameBoard = new GameBoard();
-                        view.clearScreen();
-                        PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
-                        newPrint.displayBoard();
-                    }
-                    view.println("Draw");
-
-                }
-                this.playersInGame.clear();
+            ArrayList<Card> lastUsedCards = new ArrayList<>();
+            for (Card card : cartsToCompare) {
+                lastUsedCards.add(card);
             }
+
+            this.cardsInBuffer.addAll(this.cartsToCompare);
+            this.cartsToCompare.clear();
+            showResultAfterRound(lastUsedCards);
+            this.playersInGame.clear();
+            removePlayer();
         }
         if (this.players.get(0).hasNext()) {
             view.println(String.format("%s win game!!!", players.get(0).getName()));
         } else {
             view.println(String.format("%s win game!!!", players.get(1).getName()));
         }
+    }
+
+    protected void addCartFromAllPlayers() {
+        for (Player player : this.players) {
+            if (player.hasNext()) {
+                player.getCards().get(0).setChoose(this.chooseToComare);
+                this.cartsToCompare.add(player.next());
+                this.playersInGame.add(player);
+            }
+        }
+    }
+
+    protected void showResultAfterRound(ArrayList<Card> lastUsedCards) {
+        if (this.result == 0 || this.result == 1) {
+            this.players.get(this.result).getCards().addAll(this.cardsInBuffer);
+            this.cardsInBuffer.clear();
+            if(playersInGame.size() > 1) {
+                GameBoard gameBoard = new GameBoard();
+                view.clearScreen();
+                PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
+                newPrint.displayBoard();
+            }
+            getChooseAfterWin();
+        } else {
+            if(playersInGame.size() > 1) {
+                GameBoard gameBoard = new GameBoard();
+                view.clearScreen();
+                PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
+                newPrint.displayBoard();
+            }
+            view.println("Draw");
+        }
+
     }
 
     protected boolean areEnoughPlayers() {
@@ -138,6 +141,18 @@ public class QuarterGame {
         for (Player player : this.players) {
             view.println(String.format("%s has %d Card's", player.getName(), player.getCards().size()));
         }
+    }
+
+    protected void removePlayer() {
+        ArrayList<Player> bufforPlayers = new ArrayList<>();
+
+        for (Player player : this.players) {
+            if (player.hasNext()) {
+                bufforPlayers.add(player);
+            }
+        }
+        this.players.clear();
+        this.players.addAll(bufforPlayers);
     }
 }
 

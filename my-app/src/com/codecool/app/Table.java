@@ -320,7 +320,7 @@ public class Table {
 
 
 
-                
+
             }
             else if (option.equals("60") || option.equals("SIXTY") || option.equals("T")  || option.equals("2")) {
                 setCountOfCard(60);

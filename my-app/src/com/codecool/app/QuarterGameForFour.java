@@ -16,11 +16,7 @@ public class QuarterGameForFour extends QuarterGameForThree {
             view.pressEnter();
 
             if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 3 || this.result == 14) {
-                for (Player player : this.players) {
-                    player.getCards().get(0).setChoose(this.chooseToComare);
-                    this.cartsToCompare.add(player.next());
-                    this.playersInGame.add(player);
-                }
+                addCartFromAllPlayers();
             } else if (this.result == 4 || this.result == 5 || this.result == 7) {
                 super.addCardsToCompareIfDraw(this.result);
             } else {

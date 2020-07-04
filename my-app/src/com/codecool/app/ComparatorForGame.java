@@ -1,8 +1,6 @@
 package com.codecool.app;
 
-import java.util.Comparator;
-
-public class ComparatorForGame implements Comparator<Card> {
+public class ComparatorForGame implements ComparatorQuarter {
 
     enum FightResult {
         FIRST_WIN, SECOND_WIN, THIRD_WIN, FOURTH_WIN, WAR_1_2, WAR_1_3, WAR_1_4, WAR_2_3,
@@ -23,6 +21,7 @@ public class ComparatorForGame implements Comparator<Card> {
         }
     }
 
+    @Override
     public int compare(Card card1, Card card2, Card card3){
 
         if (card1.getAtribute(card1.getChoose()) > card2.getAtribute(card2.getChoose()) &&
@@ -52,6 +51,7 @@ public class ComparatorForGame implements Comparator<Card> {
         }
     }
 
+    @Override
     public int compare(Card card1, Card card2, Card card3, Card card4) {
 
         if (card1.getAtribute(card1.getChoose()) > card2.getAtribute(card2.getChoose()) &&
