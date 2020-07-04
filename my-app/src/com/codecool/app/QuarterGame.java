@@ -26,7 +26,6 @@ public class QuarterGame {
         this.chooseToComare = players.get(0).chooseCardField();
         quarter();
 
-
         this.players.clear();
         this.isUser.clear();
         this.deckToGame.clear();
@@ -115,19 +114,7 @@ public class QuarterGame {
             }
             view.println("Draw");
         }
-
     }
-
-    protected boolean areEnoughPlayers() {
-
-        for (Player player : this.players) {
-            if (!player.hasNext()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 
     protected void getChooseAfterWin() {
         view.println(String.format("%s wins battle", players.get(this.result).getName()));
