@@ -5,15 +5,15 @@ import java.util.List;
 
 public class QuarterGameForFour extends QuarterGameForThree {
 
-    public QuarterGameForFour(ArrayList<Card> deckToGame, List<Boolean> isUser) {
-        super(deckToGame, isUser);
+    public QuarterGameForFour(ArrayList<Card> deckToGame, List<Boolean> isUser, View view) {
+        super(deckToGame, isUser, view);
     }
 
     @Override
-    protected void quarter(View view, QuarterGame game) {
+    protected void quarter() {
 
         while (this.players.size() == 4) {
-            game.pressEnter(view);
+            view.pressEnter();
 
             if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 3 || this.result == 14) {
                 for (Player player : this.players) {
@@ -27,12 +27,12 @@ public class QuarterGameForFour extends QuarterGameForThree {
                 addCardsToCompareIfDraw(this.result);
             }
             getCompareResult();
-            addCartsToPlayers(view, game);
+            addCartsToPlayers();
             removePlayer();
         }
 
         super.cardsInBuffer.addAll(this.cardsInBuffer);
-        super.quarter(view, game);
+        super.quarter();
     }
 
     @Override
@@ -213,13 +213,13 @@ public class QuarterGameForFour extends QuarterGameForThree {
     }
 
     @Override
-    protected void showResultWithCompare(View view, QuarterGame game, int result) {
+    protected void showResultWithCompare(int result) {
         if (result == 0 || result == 1 || result == 2 || result == 3) {
             this.cardsInBuffer.clear();
-            game.getChooseAfterWin(view, game);
+            getChooseAfterWin();
         }
         else if (result == 4 || result == 5 || result == 7 || result == 14){
-            super.showResultWithCompare(view, game, result);
+            super.showResultWithCompare(result);
         }
         else if (result == 6) {
             view.println(String.format("Draw! %s and %s", players.get(0).getName(), players.get(3).getName()));
