@@ -28,6 +28,11 @@ public class Table {
                     launchGame();
                     break;
                 case 2:
+                    view.clearScreen();
+                    view.printRules("./src/resources/Rules.txt");
+                    view.pressEnter();
+                    break;
+                case 3:
                     view.println("Good bye!");
                     isRun = false;
                     break;
@@ -49,6 +54,7 @@ public class Table {
 
     private void chooseOptionOfGame() {
         chooseCountOfCard();
+        view.println("");
         chooseCountPlayers();
         chooseUserEnemy();
     }
@@ -58,6 +64,7 @@ public class Table {
         String option = "";
 
         while (isRun) {
+            view.println("How many cards do you want to play with?");
             option = view.chooseCountOfCard();
 
             if (option.equals("24") || option.equals("TWENTY") || option.equals("T") || option.equals("1")) {
@@ -76,6 +83,7 @@ public class Table {
         boolean isRun = true;
 
         while (isRun) {
+            view.println("How many players do you want to set up?");
             String option = view.chooseCountPlayers();
 
             if (option.equals("TWO") || option.equals("2")) {
@@ -90,6 +98,7 @@ public class Table {
                 setCountOfPlayers(4);
                 isRun = false;
             }
+            view.clearScreen();
         }
     }
 

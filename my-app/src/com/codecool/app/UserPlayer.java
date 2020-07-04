@@ -68,7 +68,7 @@ public class UserPlayer extends Player {
         int choosenField = getField();
 
         List<String> stats = Arrays.asList("PACE", "SHOOTING", "PASSING", "DRIBBLING", "DEFENCE", "PHYSIC");
-        System.out.println(Name.toUpperCase() + " picked " + stats.get(choosenField + 1) + " fot next round");
+        System.out.println(Name.toUpperCase() + " picked " + stats.get(choosenField) + " for next round");
 
         return  choosenField;
     }

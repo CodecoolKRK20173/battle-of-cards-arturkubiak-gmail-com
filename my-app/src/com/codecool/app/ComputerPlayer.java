@@ -24,7 +24,7 @@ public class ComputerPlayer extends Player {
         int biggestField = card.getBiggestField();
 
         List<String> stats = Arrays.asList("PACE", "SHOOTING", "PASSING", "DRIBBLING", "DEFENCE", "PHYSIC");
-        System.out.println(Name.toUpperCase() + " picked " + stats.get(biggestField + 1) + " fot next round");
+        System.out.println(Name.toUpperCase() + " picked " + stats.get(biggestField) + " fot next round");
 
         return biggestField;
     }

@@ -34,7 +34,7 @@ public class QuarterGame {
     protected void getPlayersObject(ArrayList<ArrayList<Card>> separatedDeck) {
         for (int index = 0; index < isUser.size(); index++) {
             if (isUser.get(index)) {
-                String name = view.getNamePlayer();
+                String name = view.getNamePlayer(index + 1);
                 this.players.add(new UserPlayer(name, separatedDeck.get(index)));
             }
             else {
