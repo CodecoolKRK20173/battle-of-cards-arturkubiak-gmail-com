@@ -2,6 +2,8 @@ package com.codecool.app;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserPlayer extends Player {
@@ -65,21 +67,9 @@ public class UserPlayer extends Player {
 
         int choosenField = getField();
 
-//        if(choosenField == 1) {
-//            System.out.println("User picks PACE");
-//        } else if(choosenField == 2) {
-//            System.out.println("User picks SHOOTING");
-//        } else if(choosenField == 3) {
-//            System.out.println("User picks PASSING");
-//        } else if(choosenField == 4) {
-//            System.out.println("User picks DRIBBLING");
-//        } else if(choosenField == 5) {
-//            System.out.println("User picks DEFENCE");
-//        } else if(choosenField == 6) {
-//            System.out.println("User picks PHYSIC");
-//        }
+        List<String> stats = Arrays.asList("PACE", "SHOOTING", "PASSING", "DRIBBLING", "DEFENCE", "PHYSIC");
+        System.out.println(Name.toUpperCase() + " picked " + stats.get(choosenField + 1) + " fot next round");
 
-        System.out.println("Number of picked statistic: " + (choosenField + 1));
         return  choosenField;
     }
 }

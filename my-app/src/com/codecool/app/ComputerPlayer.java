@@ -1,6 +1,8 @@
 package com.codecool.app;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ComputerPlayer extends Player {
 
@@ -21,8 +23,9 @@ public class ComputerPlayer extends Player {
 
         int biggestField = card.getBiggestField();
 
-        // System.out.println(card.toString());
-        System.out.println("Number of picked statistic: " + (biggestField + 1));
+        List<String> stats = Arrays.asList("PACE", "SHOOTING", "PASSING", "DRIBBLING", "DEFENCE", "PHYSIC");
+        System.out.println(Name.toUpperCase() + " picked " + stats.get(biggestField + 1) + " fot next round");
+
         return biggestField;
     }
 }
