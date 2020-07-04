@@ -13,17 +13,6 @@ public class Table {
         this.countOfCard = 0;
     }
 
-    private enum OptionDeckOfCards {
-        TWENTY_FOUR_CARDS, SIXTY_CARDS;
-    }
-
-    private enum OptionCountPlayers {
-        TWO, THREE, FOUR;
-    }
-    private enum OptionUser {
-        YES, NO;
-    }
-
     void run() {
         boolean isRun = true;
 
@@ -50,10 +39,8 @@ public class Table {
     private Integer returnOption() {
         int option = 0;
 
-        view.print("Privide number of option: ");
-
         try {
-            option = scan.nextInt();
+            option = view.getOption();
         } catch (InputMismatchException e) {
             scan.next();
         }
@@ -68,32 +55,286 @@ public class Table {
 
     private void chooseCountOfCard() {
         boolean isRun = true;
-        OptionDeckOfCards[] countOfCards = OptionDeckOfCards.values();
-        printEnum(countOfCards);
+        String option = "";
 
         while (isRun) {
-            view.print("Provide` you option: ");
-            String option = scan.nextLine().toUpperCase().trim();
+            option = view.chooseCountOfCard();
 
             if (option.equals("24") || option.equals("TWENTY") || option.equals("T") || option.equals("1")) {
                 setCountOfCard(24);
                 isRun = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
             }
             else if (option.equals("60") || option.equals("SIXTY") || option.equals("T")  || option.equals("2")) {
                 setCountOfCard(60);
                 isRun = false;
             }
+            view.clearScreen();
         }
     }
 
     private void chooseCountPlayers() {
         boolean isRun = true;
-        OptionCountPlayers[] countOfPlayers = OptionCountPlayers.values();
-        printEnum(countOfPlayers);
 
         while (isRun) {
-            view.print("Provide you option: ");
-            String option = scan.nextLine().toUpperCase().trim();
+            String option = view.chooseCountPlayers();
 
             if (option.equals("TWO") || option.equals("2")) {
                 setCountOfPlayers(2);
@@ -116,10 +357,7 @@ public class Table {
             boolean isRun = true;
 
             while (isRun) {
-                OptionUser[] users = OptionUser.values();
-                printEnum(users);
-                view.println("Enter 'yes' if the player is to be a user. If not, enter 'no'");
-                String option = scan.nextLine().toUpperCase().trim();
+                String option = view.chooseUserEnemy();
 
                 if (option.equals("1") || option.equals("Y") || option.equals("YES")) {
                     this.isUser.add(true);
@@ -149,12 +387,6 @@ public class Table {
         else {
             QuarterGame game = new QuarterGameForFour((ArrayList<Card>) deckOfCards.getDeck(), this.isUser, view);
             game.run();
-        }
-    }
-
-    private void printEnum(Enum[] enumList) {
-        for (Enum enumElement : enumList) {
-            view.println(enumElement.name());
         }
     }
 
