@@ -6,6 +6,8 @@ public class Table {
     private int countOfCard;
     private int countOfPlayers;
     private List<Boolean> isUser = new ArrayList<>();
+    private View view = new View();
+    private Scanner scan = new Scanner(System.in);
 
     public Table() {
         this.countOfCard = 0;
@@ -25,20 +27,16 @@ public class Table {
     void run() {
         boolean isRun = true;
 
-        Table table = new Table();
-        View view = new View();
-        Scanner scan = new Scanner(System.in);
-
         while (isRun) {
             view.clearScreen();
             view.printMenu();
 
-            int option = table.returnOption(view, scan);
+            int option = returnOption();
 
             switch (option) {
                 case 1:
-                    table.chooseOptionOfGame(table, view, scan);
-                    table.launchGame(view, scan);
+                    chooseOptionOfGame();
+                    launchGame();
                     break;
                 case 2:
                     view.println("Good bye!");
@@ -49,7 +47,7 @@ public class Table {
         scan.close();
     }
 
-    private Integer returnOption(View view, Scanner scan) {
+    private Integer returnOption() {
         int option = 0;
 
         view.print("Privide number of option: ");
@@ -62,64 +60,64 @@ public class Table {
         return option;
     }
 
-    private void chooseOptionOfGame(Table table, View view, Scanner scan) {
-        chooseCountOfCard(table, view, scan);
-        chooseCountPlayers(table, view, scan);
-        chooseUserEnemy(table, view, scan);
+    private void chooseOptionOfGame() {
+        chooseCountOfCard();
+        chooseCountPlayers();
+        chooseUserEnemy();
     }
 
-    private void chooseCountOfCard(Table table, View view, Scanner scan) {
+    private void chooseCountOfCard() {
         boolean isRun = true;
         OptionDeckOfCards[] countOfCards = OptionDeckOfCards.values();
-        table.printEnum(countOfCards, view);
+        printEnum(countOfCards);
 
         while (isRun) {
             view.print("Provide` you option: ");
             String option = scan.nextLine().toUpperCase().trim();
 
             if (option.equals("24") || option.equals("TWENTY") || option.equals("T") || option.equals("1")) {
-                table.setCountOfCard(24);
+                setCountOfCard(24);
                 isRun = false;
             }
             else if (option.equals("60") || option.equals("SIXTY") || option.equals("T")  || option.equals("2")) {
-                table.setCountOfCard(60);
+                setCountOfCard(60);
                 isRun = false;
             }
         }
     }
 
-    private void chooseCountPlayers(Table table, View view, Scanner scan) {
+    private void chooseCountPlayers() {
         boolean isRun = true;
         OptionCountPlayers[] countOfPlayers = OptionCountPlayers.values();
-        table.printEnum(countOfPlayers, view);
+        printEnum(countOfPlayers);
 
         while (isRun) {
             view.print("Provide you option: ");
             String option = scan.nextLine().toUpperCase().trim();
 
             if (option.equals("TWO") || option.equals("2")) {
-                table.setCountOfPlayers(2);
+                setCountOfPlayers(2);
                 isRun = false;
             }
             else if (option.equals("THREE") || option.equals("3")) {
-                table.setCountOfPlayers(3);
+                setCountOfPlayers(3);
                 isRun = false;
             }
             else if (option.equals("FOUR") || option.equals("4")) {
-                table.setCountOfPlayers(4);
+                setCountOfPlayers(4);
                 isRun = false;
             }
         }
     }
 
-    private void chooseUserEnemy(Table table, View view, Scanner scan) {
+    private void chooseUserEnemy() {
         for (int index = 0; index < this.countOfPlayers; index++) {
             view.clearScreen();
             boolean isRun = true;
 
             while (isRun) {
                 OptionUser[] users = OptionUser.values();
-                table.printEnum(users, view);
+                printEnum(users);
                 view.println("Enter 'yes' if the player is to be a user. If not, enter 'no'");
                 String option = scan.nextLine().toUpperCase().trim();
 
@@ -135,7 +133,7 @@ public class Table {
         }
     }
 
-    private void launchGame(View view, Scanner scan) {
+    private void launchGame() {
         CardsSourceCSV cardSource = new CardsSourceCSV();
         List<List<String>> strCards = cardSource.getCardsDataFromFile("./src/resources/players_20_top200.csv");
         Deck deckOfCards = new Deck(this.countOfCard, strCards);
@@ -154,7 +152,7 @@ public class Table {
         }
     }
 
-    private void printEnum(Enum[] enumList, View view) {
+    private void printEnum(Enum[] enumList) {
         for (Enum enumElement : enumList) {
             view.println(enumElement.name());
         }
