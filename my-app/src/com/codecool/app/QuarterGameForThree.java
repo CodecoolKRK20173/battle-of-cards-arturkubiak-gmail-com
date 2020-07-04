@@ -5,15 +5,15 @@ import java.util.List;
 
 public class QuarterGameForThree extends QuarterGame {
 
-    public QuarterGameForThree(ArrayList<Card> deckToGame, List<Boolean> isUser) {
-        super(deckToGame, isUser);
+    public QuarterGameForThree(ArrayList<Card> deckToGame, List<Boolean> isUser, View view) {
+        super(deckToGame, isUser, view);
     }
 
     @Override
-    protected void quarter(View view, QuarterGame game) {
+    protected void quarter() {
 
         while (this.players.size() == 3) {
-            game.pressEnter(view);
+            view.pressEnter();
 
             if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 10) {
                 for (Player player : this.players) {
@@ -26,10 +26,10 @@ public class QuarterGameForThree extends QuarterGame {
                 addCardsToCompareIfDraw(this.result);
             }
             getCompareResult();
-            addCartsToPlayers(view, game);
+            addCartsToPlayers();
             removePlayer();
         }
-        afterBreakLoop(view, game);
+        afterBreakLoop();
     }
 
     protected void addCardsToCompareIfDraw(int result) {
@@ -59,21 +59,21 @@ public class QuarterGameForThree extends QuarterGame {
         }
     }
 
-    protected void addCartsToPlayers(View view, QuarterGame game) {
+    protected void addCartsToPlayers() {
         this.cardsInBuffer.addAll(this.cartsToCompare);
         this.cartsToCompare.clear();
 
         if (result == 0 || result == 1 || result == 2 || result == 3) {
             this.players.get(result).getCards().addAll(this.cardsInBuffer);
         }
-        showResultWithCompare(view, game, this.result);
+        showResultWithCompare(this.result);
         this.playersInGame.clear();
     }
 
-    protected void showResultWithCompare(View view, QuarterGame game, int result) {
+    protected void showResultWithCompare(int result) {
         if (result == 0 || result == 1 || result == 2) {
             this.cardsInBuffer.clear();
-            game.getChooseAfterWin(view, game);
+            getChooseAfterWin();
         }
         else {
             if (result == 4) {
@@ -88,7 +88,7 @@ public class QuarterGameForThree extends QuarterGame {
             else {
                 view.println("Draw! All players");
             }
-            game.quantityCardsOfPlayers(view);
+            quantityCardsOfPlayers();
         }
     }
 
@@ -123,9 +123,9 @@ public class QuarterGameForThree extends QuarterGame {
         }
     }
 
-    protected void afterBreakLoop(View view, QuarterGame game) {
+    protected void afterBreakLoop() {
         super.cardsInBuffer.addAll(this.cardsInBuffer);
-        super.quarter(view, game);
+        super.quarter();
     }
 
     protected void removePlayer() {

@@ -25,7 +25,7 @@ class QuarterGameForThreeTest {
     private Player player2 = new ComputerPlayer("Robert", deckOfCards);
     private Player player3 = new ComputerPlayer("Piotr", deckOfCards);
 
-    private QuarterGameForThree game = new QuarterGameForThree(deckOfCards, isUser);
+    private QuarterGameForThree game = new QuarterGameForThree(deckOfCards, isUser, view);
 
 
     @Test

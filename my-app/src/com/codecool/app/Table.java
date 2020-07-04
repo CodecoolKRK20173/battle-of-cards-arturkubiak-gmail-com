@@ -141,16 +141,16 @@ public class Table {
         Deck deckOfCards = new Deck(this.countOfCard, strCards);
 
         if (countOfPlayers == 2) {
-            QuarterGame game = new QuarterGame((ArrayList<Card>) deckOfCards.getDeck(), this.isUser);
-            game.run(game, view, scan);
+            QuarterGame game = new QuarterGame((ArrayList<Card>) deckOfCards.getDeck(), this.isUser, view);
+            game.run();
         }
         else if ((countOfPlayers == 3)) {
-            QuarterGame game = new QuarterGameForThree((ArrayList<Card>) deckOfCards.getDeck(), this.isUser);
-            game.run(game, view, scan);
+            QuarterGame game = new QuarterGameForThree((ArrayList<Card>) deckOfCards.getDeck(), this.isUser, view);
+            game.run();
         }
         else {
-            QuarterGame game = new QuarterGameForFour((ArrayList<Card>) deckOfCards.getDeck(), this.isUser);
-            game.run(game, view, scan);
+            QuarterGame game = new QuarterGameForFour((ArrayList<Card>) deckOfCards.getDeck(), this.isUser, view);
+            game.run();
         }
     }
 

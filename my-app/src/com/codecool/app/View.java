@@ -1,6 +1,9 @@
 package com.codecool.app;
 
+import java.util.Scanner;
+
 public class View {
+    private Scanner scan = new Scanner(System.in);
 
     void printMenu() {
         String[] options = {"Start game", "End game"};
@@ -23,5 +26,16 @@ public class View {
     void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    String getNamePlayer() {
+        System.out.print("Provide your name: ");
+        return scan.nextLine();
+    }
+
+    void pressEnter() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Press ENTER");
+        String pressing = scan.nextLine();
     }
 }

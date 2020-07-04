@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class QuarterGame {
     protected ArrayList<Card> deckToGame;
     protected List<Boolean> isUser;
+    protected View view;
     protected ArrayList<Player> players = new ArrayList<>();
     protected ArrayList<Card> cardsInBuffer =  new ArrayList<>();
     protected ArrayList<Card> cartsToCompare =  new ArrayList<>();
@@ -14,27 +15,28 @@ public class QuarterGame {
     protected int chooseToComare;
     protected int result = 0;
 
-    public QuarterGame(ArrayList<Card> deckToGame, List<Boolean> isUser) {
+    public QuarterGame(ArrayList<Card> deckToGame, List<Boolean> isUser, View view) {
+        this.view = view;
         this.deckToGame = deckToGame;
         this.isUser = isUser;
     }
 
-    void run(QuarterGame game, View view, Scanner scan) {
-        ArrayList<ArrayList<Card>> separatedDeck = game.getCardsForPlayers(deckToGame);
-        game.getPlayersObject(view, scan, separatedDeck);
+    void run() {
+        ArrayList<ArrayList<Card>> separatedDeck = getCardsForPlayers(deckToGame);
+        getPlayersObject(separatedDeck);
         this.chooseToComare = players.get(0).chooseCardField();
-        game.quarter(view, game);
+        quarter();
+
 
         this.players.clear();
         this.isUser.clear();
         this.deckToGame.clear();
     }
 
-    protected void getPlayersObject(View view, Scanner scan, ArrayList<ArrayList<Card>> separatedDeck) {
+    protected void getPlayersObject(ArrayList<ArrayList<Card>> separatedDeck) {
         for (int index = 0; index < isUser.size(); index++) {
             if (isUser.get(index)) {
-                view.print("Provide your name: ");
-                String name = scan.nextLine();
+                String name = view.getNamePlayer();
                 this.players.add(new UserPlayer(name, separatedDeck.get(index)));
             }
             else {
@@ -58,12 +60,12 @@ public class QuarterGame {
         return separatedDeck;
     }
 
-    protected void quarter(View view, QuarterGame game) {
+    protected void quarter() {
         ComparatorForGame comparator = new ComparatorForGame();
 
         if (players.size() == 2) {
             while (areEnoughPlayers()) {
-                game.pressEnter(view);
+                view.pressEnter();
 
                 for (Player player : this.players) {
                     if (player.hasNext()) {
@@ -92,7 +94,7 @@ public class QuarterGame {
                         PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
                         newPrint.displayBoard();
                     }
-                    game.getChooseAfterWin(view, game);
+                    getChooseAfterWin();
                 } else {
                     if(playersInGame.size() > 1) {
                         GameBoard gameBoard = new GameBoard();
@@ -101,7 +103,7 @@ public class QuarterGame {
                         newPrint.displayBoard();
                     }
                     view.println("Draw");
-                    // game.quantityCardsOfPlayers(view);
+
                 }
                 this.playersInGame.clear();
             }
@@ -111,12 +113,6 @@ public class QuarterGame {
         } else {
             view.println(String.format("%s win game!!!", players.get(1).getName()));
         }
-    }
-
-    protected void pressEnter(View view) {
-        Scanner scan = new Scanner(System.in);
-        view.println("Press ENTER");
-        String pressing = scan.nextLine();
     }
 
     protected boolean areEnoughPlayers() {
@@ -129,17 +125,19 @@ public class QuarterGame {
         return true;
     }
 
-    protected void getChooseAfterWin(View view, QuarterGame game) {
+
+    protected void getChooseAfterWin() {
         view.println(String.format("%s wins battle", players.get(this.result).getName()));
-        // game.quantityCardsOfPlayers(view);
         System.out.println(" ");
         view.println(String.format("%s, pick statistic you want to play:", players.get(this.result).getName()));
+
         this.chooseToComare = players.get(result).chooseCardField();
     }
 
-    protected void quantityCardsOfPlayers(View view) {
+    protected void quantityCardsOfPlayers() {
         for (Player player : this.players) {
             view.println(String.format("%s has %d Card's", player.getName(), player.getCards().size()));
         }
     }
 }
+

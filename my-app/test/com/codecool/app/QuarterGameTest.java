@@ -29,8 +29,7 @@ class QuarterGameTest {
         fullDeck.add(card1); fullDeck.add(card2); fullDeck.add(card3); fullDeck.add(card4);
         playerListIsUser.add(player1IsUser); playerListIsUser.add(player2IsUser);
 
-        quarterGame = new QuarterGame(fullDeck, playerListIsUser);
-
+        quarterGame = new QuarterGame(fullDeck, playerListIsUser, view);
     }
 
     @Test
@@ -52,7 +51,7 @@ class QuarterGameTest {
         Player player2 = new ComputerPlayer("player2", (ArrayList<Card>) player2Cards); quarterGame.players.add(player2);
 
         assertEquals(quarterGame.players.size(), 2);
-        quarterGame.quarter(view, quarterGame);
+        quarterGame.quarter();
 
         assertEquals(player1.Cards.size(), 2);
         assertEquals(player2.Cards.size(), 0);
@@ -69,7 +68,7 @@ class QuarterGameTest {
         Player player2 = new ComputerPlayer("player2", (ArrayList<Card>) player2Cards); quarterGame.players.add(player2);
 
         assertEquals(quarterGame.players.size(), 2);
-        quarterGame.quarter(view, quarterGame);
+        quarterGame.quarter();
 
         assertEquals(player1.Cards.size(), 0);
         assertEquals(player2.Cards.size(), 2);
@@ -86,7 +85,7 @@ class QuarterGameTest {
         Player player2 = new ComputerPlayer("player2", (ArrayList<Card>) player2Cards); quarterGame.players.add(player2);
 
         assertEquals(quarterGame.players.size(), 2);
-        quarterGame.quarter(view, quarterGame);
+        quarterGame.quarter();
 
         assertEquals(player1.Cards.size(), 0);
         assertEquals(player2.Cards.size(), 4);
