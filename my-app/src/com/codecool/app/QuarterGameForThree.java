@@ -15,12 +15,12 @@ public class QuarterGameForThree extends QuarterGame {
         while (this.players.size() == 3) {
             view.pressEnter();
 
-            if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 10) {
-                addCartFromAllPlayers();
-            }
-            else {
-                addCardsToCompareIfDraw(this.result);
-            }
+            if (this.result == FightResult.FIRST_WIN.ordinal()) {addCartFromAllPlayers(); }
+            else if (this.result == FightResult.SECOND_WIN.ordinal()) { addCartFromAllPlayers(); }
+            else if (this.result == FightResult.THIRD_WIN.ordinal()) { addCartFromAllPlayers(); }
+            else if (this.result == FightResult.WAR_1_2_3.ordinal()) { addCartFromAllPlayers(); }
+            else { addCardsToCompareIfDraw(this.result); }
+
             getCompareResult();
             addCartsToPlayers();
             removePlayer();
@@ -29,29 +29,19 @@ public class QuarterGameForThree extends QuarterGame {
     }
 
     protected void addCardsToCompareIfDraw(int result) {
-        int []tab;
+        int [] tabWithPlayersInGame;
 
-        if (result == 4) {
-            tab = new int[]{0, 1};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
-        } else if (result == 5) {
-            tab = new int[] {0, 2};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+        if (result == FightResult.WAR_1_2.ordinal()) {
+            tabWithPlayersInGame = new int[] {0, 1};
+        } else if (result == FightResult.WAR_1_3.ordinal()) {
+            tabWithPlayersInGame = new int[] {0, 2};
         } else {
-            tab = new int[]{1, 2};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+            tabWithPlayersInGame = new int[] {1, 2};
+        }
+        for (int value : tabWithPlayersInGame) {
+            this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+            this.playersInGame.add(players.get(value));
+            this.cartsToCompare.add(this.players.get(value).next());
         }
     }
 
@@ -59,7 +49,16 @@ public class QuarterGameForThree extends QuarterGame {
         this.cardsInBuffer.addAll(this.cartsToCompare);
         this.cartsToCompare.clear();
 
-        if (result == 0 || result == 1 || result == 2 || result == 3) {
+        if (result == FightResult.FIRST_WIN.ordinal()) {
+            this.players.get(result).getCards().addAll(this.cardsInBuffer);
+        }
+        else if (result == FightResult.SECOND_WIN.ordinal()) {
+            this.players.get(result).getCards().addAll(this.cardsInBuffer);
+        }
+        else if (result == FightResult.THIRD_WIN.ordinal()) {
+            this.players.get(result).getCards().addAll(this.cardsInBuffer);
+        }
+        else if (result == FightResult.FOURTH_WIN.ordinal()) {
             this.players.get(result).getCards().addAll(this.cardsInBuffer);
         }
         showResultWithCompare(this.result);
@@ -67,18 +66,23 @@ public class QuarterGameForThree extends QuarterGame {
     }
 
     protected void showResultWithCompare(int result) {
-        if (result == 0 || result == 1 || result == 2) {
-            this.cardsInBuffer.clear();
+        if (result == FightResult.FIRST_WIN.ordinal()) {
+            getChooseAfterWin();
+        }
+        else if (result == FightResult.SECOND_WIN.ordinal()) {
+            getChooseAfterWin();
+        }
+        else if (result == FightResult.THIRD_WIN.ordinal()) {
             getChooseAfterWin();
         }
         else {
-            if (result == 4) {
+            if (result == FightResult.WAR_1_2.ordinal()) {
                 view.println(String.format("Draw! %s and %s", players.get(0).getName(), players.get(1).getName()));
             }
-            else if (result == 5) {
+            else if (result == FightResult.WAR_1_3.ordinal()) {
                 view.println(String.format("Draw! %s and %s", players.get(0).getName(), players.get(2).getName()));
             }
-            else if (result == 7) {
+            else if (result == FightResult.WAR_2_3.ordinal()) {
                 view.println(String.format("Draw! %s and %s", players.get(1).getName(), players.get(2).getName()));
             }
             else {
@@ -99,23 +103,23 @@ public class QuarterGameForThree extends QuarterGame {
             bufforResult = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
         }
 
-        if (bufforResult == 0 && this.result == 4) {
-            this.result = 0;
+        if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_1_2.ordinal()) {
+            this.result = FightResult.FIRST_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 4) {
-            this.result = 1;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_1_2.ordinal()) {
+            this.result = FightResult.SECOND_WIN.ordinal();
         }
-        else if (bufforResult == 0 && this.result == 5) {
-            this.result = 0;
+        else if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_1_3.ordinal()) {
+            this.result = FightResult.FIRST_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 5) {
-            this.result = 2;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_1_3.ordinal()) {
+            this.result = FightResult.THIRD_WIN.ordinal();
         }
-        else if (bufforResult == 0 && this.result == 7) {
-            this.result = 1;
+        else if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_2_3.ordinal()) {
+            this.result = FightResult.SECOND_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 7) {
-            this.result = 2;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_2_3.ordinal()) {
+            this.result = FightResult.THIRD_WIN.ordinal();
         }
     }
 
