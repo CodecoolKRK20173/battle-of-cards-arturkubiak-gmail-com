@@ -23,6 +23,7 @@ public class QuarterGame {
     void run() {
         ArrayList<ArrayList<Card>> separatedDeck = getCardsForPlayers(deckToGame);
         getPlayersObject(separatedDeck);
+        view.println(String.format("%s, pick statistic you want to play:", players.get(0).getName().toUpperCase()));
         this.chooseToComare = players.get(0).chooseCardField();
         quarter();
 
@@ -34,7 +35,7 @@ public class QuarterGame {
     protected void getPlayersObject(ArrayList<ArrayList<Card>> separatedDeck) {
         for (int index = 0; index < isUser.size(); index++) {
             if (isUser.get(index)) {
-                String name = view.getNamePlayer();
+                String name = view.getNamePlayer(index + 1);
                 this.players.add(new UserPlayer(name, separatedDeck.get(index)));
             }
             else {
@@ -78,9 +79,9 @@ public class QuarterGame {
             removePlayer();
         }
         if (this.players.get(0).hasNext()) {
-            view.println(String.format("%s win game!!!", players.get(0).getName()));
+            view.println(String.format("%s win game!!!", players.get(0).getName().toUpperCase()));
         } else {
-            view.println(String.format("%s win game!!!", players.get(1).getName()));
+            view.println(String.format("%s win game!!!", players.get(1).getName().toUpperCase()));
         }
     }
 
@@ -112,7 +113,7 @@ public class QuarterGame {
                 PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
                 newPrint.displayBoard();
             }
-            view.println("Draw");
+            view.println("Draw - two more cards to get in the next round!");
         }
     }
 
@@ -120,7 +121,7 @@ public class QuarterGame {
         this.cardsInBuffer.clear();
         view.println(String.format("%s wins battle", players.get(this.result).getName()));
         System.out.println(" ");
-        view.println(String.format("%s, pick statistic you want to play:", players.get(this.result).getName()));
+        view.println(String.format("%s, pick statistic you want to play:", players.get(this.result).getName().toUpperCase()));
 
         this.chooseToComare = players.get(result).chooseCardField();
     }
