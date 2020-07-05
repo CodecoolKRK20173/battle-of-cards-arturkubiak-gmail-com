@@ -44,7 +44,9 @@ public class View {
     String getNamePlayer(int playerIndex) {
         clearScreen();
         System.out.print("Player number " + playerIndex + " name (user player): ");
-        return scan.nextLine();
+        String newName = scan.nextLine();
+        clearScreen();
+        return newName;
     }
 
     void pressEnter() {
@@ -61,7 +63,7 @@ public class View {
     String chooseCountOfCard() {
         OptionDeckOfCards[] countOfCards = OptionDeckOfCards.values();
         printEnum(countOfCards);
-        System.out.print("Provide you option: ");
+        System.out.print("\nProvide you option: ");
         return scan.nextLine().toUpperCase().trim();
     }
 
@@ -88,9 +90,10 @@ public class View {
     void printRules(String filepath) {
         ReadSimpleTXT newTXT = new ReadSimpleTXT();
         List<String> rules = newTXT.readLinesFromTxt(filepath);
-
+        clearScreen();
         for (String rule : rules) {
             System.out.println(rule);
         }
+        pressEnter();
     }
 }

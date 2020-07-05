@@ -28,9 +28,7 @@ public class Table {
                     launchGame();
                     break;
                 case 2:
-                    view.clearScreen();
                     view.printRules("./src/resources/Rules.txt");
-                    view.pressEnter();
                     break;
                 case 3:
                     view.println("Good bye!");
