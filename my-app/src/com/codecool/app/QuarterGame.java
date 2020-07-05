@@ -83,6 +83,7 @@ public class QuarterGame {
         } else {
             view.println(String.format("%s win game!!!", players.get(1).getName().toUpperCase()));
         }
+        view.pressEnter();
     }
 
     protected void addCartFromAllPlayers() {
@@ -113,7 +114,9 @@ public class QuarterGame {
                 PrintBoard newPrint = new PrintBoard(gameBoard.createFullBoard(playersInGame, lastUsedCards));
                 newPrint.displayBoard();
             }
-            view.println("Draw - two more cards to get in the next round!");
+            if(players.get(0).getCards().size() > 0 && players.get(1).getCards().size() > 0) {
+                view.println("Draw - two more cards to get in the next round, same statistic!");
+            }
         }
     }
 
@@ -121,7 +124,7 @@ public class QuarterGame {
         view.println(String.format("%s wins battle!", players.get(this.result).getName()));
         System.out.println(" ");
         view.println(String.format("%s, pick statistic you want to play:", players.get(this.result).getName().toUpperCase()));
-
+        view.pressEnter();
         this.chooseToComare = players.get(result).chooseCardField();
     }
 
