@@ -95,9 +95,9 @@ public class QuarterGame {
     }
 
     protected void showResultAfterRound(ArrayList<Card> lastUsedCards) {
-        if (this.result == 0 || this.result == 1) {
+        if (this.result == FightResult.FIRST_WIN.ordinal() || this.result == FightResult.SECOND_WIN.ordinal()) {
             this.players.get(this.result).getCards().addAll(this.cardsInBuffer);
-            this.cardsInBuffer.clear();
+
             if(playersInGame.size() > 1) {
                 GameBoard gameBoard = new GameBoard();
                 view.clearScreen();
@@ -117,6 +117,7 @@ public class QuarterGame {
     }
 
     protected void getChooseAfterWin() {
+        this.cardsInBuffer.clear();
         view.println(String.format("%s wins battle", players.get(this.result).getName()));
         System.out.println(" ");
         view.println(String.format("%s, pick statistic you want to play:", players.get(this.result).getName()));

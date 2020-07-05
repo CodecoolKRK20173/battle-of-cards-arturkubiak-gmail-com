@@ -15,13 +15,16 @@ public class QuarterGameForFour extends QuarterGameForThree {
         while (this.players.size() == 4) {
             view.pressEnter();
 
-            if (this.result == 0 || this.result == 1 || this.result == 2 || this.result == 3 || this.result == 14) {
-                addCartFromAllPlayers();
-            } else if (this.result == 4 || this.result == 5 || this.result == 7) {
-                super.addCardsToCompareIfDraw(this.result);
-            } else {
-                addCardsToCompareIfDraw(this.result);
-            }
+            if (this.result == FightResult.FIRST_WIN.ordinal()) { addCartFromAllPlayers(); }
+            else if (this.result == FightResult.SECOND_WIN.ordinal()) { addCartFromAllPlayers(); }
+            else if (this.result == FightResult.THIRD_WIN.ordinal()) { addCartFromAllPlayers(); }
+            else if (this.result == FightResult.FOURTH_WIN.ordinal()) { addCartFromAllPlayers(); }
+            else if (this.result == FightResult.WAR_1_2_3_4.ordinal()) { addCartFromAllPlayers(); }
+            else if (this.result == FightResult.WAR_1_2.ordinal()) { super.addCardsToCompareIfDraw(this.result); }
+            else if (this.result == FightResult.WAR_1_3.ordinal()) { super.addCardsToCompareIfDraw(this.result); }
+            else if (this.result == FightResult.WAR_2_3.ordinal()) { super.addCardsToCompareIfDraw(this.result); }
+            else { addCardsToCompareIfDraw(this.result); }
+
             getCompareResult();
             addCartsToPlayers();
             removePlayer();
@@ -33,64 +36,35 @@ public class QuarterGameForFour extends QuarterGameForThree {
 
     @Override
     protected void addCardsToCompareIfDraw(int result) {
-        int []tab;
+        int []tabWithPlayersInGame;
 
-        if (result == 6) {
-            tab = new int[]{0, 3};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+        if (result == FightResult.WAR_1_4.ordinal()) {
+            tabWithPlayersInGame = new int[]{0, 3};
         }
-        else if (result == 8) {
-            tab = new int[]{1, 3};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+        else if (result == FightResult.WAR_2_4.ordinal()) {
+            tabWithPlayersInGame = new int[] {1, 3};
         }
-        else if (result == 9) {
-            tab = new int[]{2, 3};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+        else if (result == FightResult.WAR_3_4.ordinal()) {
+            tabWithPlayersInGame = new int[] {2, 3};
         }
-        else if (result == 10) {
-            tab = new int[]{0, 1, 2};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+        else if (result == FightResult.WAR_1_2_3.ordinal()) {
+            tabWithPlayersInGame = new int[] {0, 1, 2};
         }
-        else if (result == 11) {
-            tab = new int[]{0, 1, 3};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+        else if (result == FightResult.WAR_1_2_4.ordinal()) {
+            tabWithPlayersInGame = new int[] {0, 1, 3};
         }
-        else if (result == 12) {
-            tab = new int[]{0, 2, 3};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+        else if (result == FightResult.WAR_1_3_4.ordinal()) {
+            tabWithPlayersInGame = new int[] {0, 2, 3};
         }
         else {
-            tab = new int[]{1, 2, 3};
-            for (int value : tab) {
-                this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
-                this.playersInGame.add(players.get(value));
-                this.cartsToCompare.add(this.players.get(value).next());
-            }
+            tabWithPlayersInGame = new int[] {1, 2, 3};
         }
+        for (int value : tabWithPlayersInGame) {
+            this.players.get(value).getCards().get(0).setChoose(this.chooseToComare);
+            this.playersInGame.add(players.get(value));
+            this.cartsToCompare.add(this.players.get(value).next());
+        }
+
     }
 
     @Override
@@ -105,10 +79,22 @@ public class QuarterGameForFour extends QuarterGameForThree {
                                              this.cartsToCompare.get(3));
         }
         else {
-            if (this.result == 4 || this.result == 5 || this.result == 7) {
+            if (this.result == FightResult.WAR_1_2.ordinal()) {
                 super.getCompareResult();
             }
-            else if (this.result == 6 || this.result == 8 || this.result == 9) {
+            else if (this.result == FightResult.WAR_1_3.ordinal()) {
+                super.getCompareResult();
+            }
+            else if (this.result == FightResult.WAR_2_3.ordinal()) {
+                super.getCompareResult();
+            }
+            else if (this.result == FightResult.WAR_1_4.ordinal()) {
+                bufforResult = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
+            }
+            else if (this.result == FightResult.WAR_2_4.ordinal()) {
+                bufforResult = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
+            }
+            else if (this.result == FightResult.WAR_3_4.ordinal()) {
                 bufforResult = comparator.compare(this.cartsToCompare.get(0), this.cartsToCompare.get(1));
             }
             else {
@@ -116,123 +102,140 @@ public class QuarterGameForFour extends QuarterGameForThree {
             }
         }
 
-        if (bufforResult == 0 && this.result == 6) {
-            this.result = 0;
+        if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_1_4.ordinal()) {
+            this.result = FightResult.FIRST_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 6) {
-            this.result = 3;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_1_4.ordinal()) {
+            this.result = FightResult.FOURTH_WIN.ordinal();
         }
-        if (bufforResult == 0 && this.result == 8) {
-            this.result = 1;
+        if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_2_4.ordinal()) {
+            this.result = FightResult.SECOND_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 8) {
-            this.result = 3;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_2_4.ordinal()) {
+            this.result = FightResult.FOURTH_WIN.ordinal();
         }
-        if (bufforResult == 0 && this.result == 9) {
-            this.result = 2;
+        if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_3_4.ordinal()) {
+            this.result = FightResult.THIRD_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 9) {
-            this.result = 3;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_3_4.ordinal()) {
+            this.result =  FightResult.FOURTH_WIN.ordinal();
         }
-        else if (bufforResult == 0 && this.result == 10) {
-            this.result = 0;
+        else if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_1_2_3.ordinal()) {
+            this.result = FightResult.FIRST_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 10) {
-            this.result = 1;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_1_2_3.ordinal()) {
+            this.result = FightResult.SECOND_WIN.ordinal();
         }
-        else if (bufforResult == 2 && this.result == 10) {
-            this.result = 2;
+        else if (bufforResult == FightResult.THIRD_WIN.ordinal() && this.result == FightResult.WAR_1_2_3.ordinal()) {
+            this.result = FightResult.THIRD_WIN.ordinal();
         }
-        else if (bufforResult == 4 && this.result == 10) {
-            this.result = 4;
+        else if (bufforResult == FightResult.WAR_1_2.ordinal() && this.result == FightResult.WAR_1_2_3.ordinal()) {
+            this.result = FightResult.WAR_1_2.ordinal();
         }
-        else if (bufforResult == 5 && this.result == 10) {
-            this.result = 5;
+        else if (bufforResult == FightResult.WAR_1_3.ordinal() && this.result == FightResult.WAR_1_2_3.ordinal()) {
+            this.result = FightResult.WAR_1_3.ordinal();
         }
-        else if (bufforResult == 7 && this.result == 10) {
-            this.result = 7;
+        else if (bufforResult == FightResult.WAR_2_3.ordinal() && this.result == FightResult.WAR_1_2_3.ordinal()) {
+            this.result = FightResult.WAR_2_3.ordinal();
         }
-        else if (bufforResult == 0 && this.result == 11) {
-            this.result = 0;
+        else if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_1_2_4.ordinal()) {
+            this.result = FightResult.FIRST_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 11) {
-            this.result = 1;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_1_2_4.ordinal()) {
+            this.result = FightResult.SECOND_WIN.ordinal();
         }
-        else if (bufforResult == 2 && this.result == 11) {
-            this.result = 3;
+        else if (bufforResult == FightResult.THIRD_WIN.ordinal() && this.result == FightResult.WAR_1_2_4.ordinal()) {
+            this.result = FightResult.FOURTH_WIN.ordinal();
         }
-        else if (bufforResult == 4 && this.result == 11) {
-            this.result = 4;
+        else if (bufforResult == FightResult.WAR_1_2.ordinal() && this.result == FightResult.WAR_1_2_4.ordinal()) {
+            this.result = FightResult.WAR_1_2.ordinal();
         }
-        else if (bufforResult == 5 && this.result == 11) {
-            this.result = 6;
+        else if (bufforResult == FightResult.WAR_1_3.ordinal() && this.result == FightResult.WAR_1_2_4.ordinal()) {
+            this.result = FightResult.WAR_1_4.ordinal();
         }
-        else if (bufforResult == 7 && this.result == 11) {
-            this.result = 8;
+        else if (bufforResult == FightResult.WAR_2_3.ordinal() && this.result == FightResult.WAR_1_2_4.ordinal()) {
+            this.result = FightResult.WAR_2_4.ordinal();
         }
-        else if (bufforResult == 0 && this.result == 12) {
-            this.result = 0;
+        else if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_1_3_4.ordinal()) {
+            this.result = FightResult.FIRST_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 12) {
-            this.result = 2;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_1_3_4.ordinal()) {
+            this.result = FightResult.THIRD_WIN.ordinal();
         }
-        else if (bufforResult == 2 && this.result == 12) {
-            this.result = 3;
+        else if (bufforResult == FightResult.THIRD_WIN.ordinal() && this.result == FightResult.WAR_1_3_4.ordinal()) {
+            this.result =  FightResult.FOURTH_WIN.ordinal();
         }
-        else if (bufforResult == 4 && this.result == 12) {
-            this.result = 5;
+        else if (bufforResult == FightResult.WAR_1_2.ordinal() && this.result == FightResult.WAR_1_3_4.ordinal()) {
+            this.result = FightResult.WAR_1_3.ordinal();
         }
-        else if (bufforResult == 5 && this.result == 12) {
-            this.result = 6;
+        else if (bufforResult == FightResult.WAR_1_3.ordinal() && this.result == FightResult.WAR_1_3_4.ordinal()) {
+            this.result = FightResult.WAR_1_4.ordinal();
         }
-        else if (bufforResult == 7 && this.result == 12) {
-            this.result = 9;
+        else if (bufforResult == FightResult.WAR_2_3.ordinal() && this.result == FightResult.WAR_1_3_4.ordinal()) {
+            this.result = FightResult.WAR_3_4.ordinal();
         }
-        else if (bufforResult == 0 && this.result == 13) {
-            this.result = 1;
+        else if (bufforResult == FightResult.FIRST_WIN.ordinal() && this.result == FightResult.WAR_2_3_4.ordinal()) {
+            this.result = FightResult.SECOND_WIN.ordinal();
         }
-        else if (bufforResult == 1 && this.result == 13) {
-            this.result = 2;
+        else if (bufforResult == FightResult.SECOND_WIN.ordinal() && this.result == FightResult.WAR_2_3_4.ordinal()) {
+            this.result = FightResult.THIRD_WIN.ordinal();
         }
-        else if (bufforResult == 2 && this.result == 13) {
-            this.result = 3;
+        else if (bufforResult == FightResult.THIRD_WIN.ordinal() && this.result == FightResult.WAR_2_3_4.ordinal()) {
+            this.result = FightResult.FOURTH_WIN.ordinal();
         }
-        else if (bufforResult == 4 && this.result == 13) {
-            this.result = 7;
+        else if (bufforResult == FightResult.WAR_1_2.ordinal() && this.result == FightResult.WAR_2_3_4.ordinal()) {
+            this.result = FightResult.WAR_2_3.ordinal();
         }
-        else if (bufforResult == 5 && this.result == 13) {
-            this.result = 8;
+        else if (bufforResult == FightResult.WAR_1_3.ordinal() && this.result == FightResult.WAR_2_3_4.ordinal()) {
+            this.result = FightResult.WAR_2_4.ordinal();
         }
-        else if (bufforResult == 7 && this.result == 13) {
-            this.result = 9;
+        else if (bufforResult == FightResult.WAR_2_3.ordinal() && this.result == FightResult.WAR_2_3_4.ordinal()) {
+            this.result = FightResult.WAR_3_4.ordinal();
         }
     }
 
     @Override
     protected void showResultWithCompare(int result) {
-        if (result == 0 || result == 1 || result == 2 || result == 3) {
-            this.cardsInBuffer.clear();
+        if (result == FightResult.FIRST_WIN.ordinal()) {
             getChooseAfterWin();
         }
-        else if (result == 4 || result == 5 || result == 7 || result == 14){
+        else if (result == FightResult.SECOND_WIN.ordinal()) {
+            getChooseAfterWin();
+        }
+        else if (result == FightResult.THIRD_WIN.ordinal()) {
+            getChooseAfterWin();
+        }
+        else if (result == FightResult.FOURTH_WIN.ordinal()) {
+            getChooseAfterWin();
+        }
+        else if (result == FightResult.WAR_1_2.ordinal()){
             super.showResultWithCompare(result);
         }
-        else if (result == 6) {
+        else if (result == FightResult.WAR_1_3.ordinal()) {
+            super.showResultWithCompare(result);
+        }
+        else if (result == FightResult.WAR_2_3.ordinal()) {
+            super.showResultWithCompare(result);
+        }
+        else if (result == FightResult.WAR_1_2_3_4.ordinal()) {
+            super.showResultWithCompare(result);
+        }
+        else if (result == FightResult.WAR_1_4.ordinal()) {
             view.println(String.format("Draw! %s and %s", players.get(0).getName(), players.get(3).getName()));
         }
-        else if (result == 8) {
+        else if (result == FightResult.WAR_2_4.ordinal()) {
             view.println(String.format("Draw! %s and %s", players.get(1).getName(), players.get(3).getName()));
         }
-        else if (result == 9) {
+        else if (result == FightResult.WAR_3_4.ordinal()) {
             view.println(String.format("Draw! %s and %s", players.get(2).getName(), players.get(3).getName()));
         }
-        else if (result == 10) {
+        else if (result == FightResult.WAR_1_2_3.ordinal()) {
             view.println(String.format("Draw! %s, %s and %s", players.get(0).getName(), players.get(1).getName(), players.get(2).getName()));
         }
-        else if (result == 11) {
+        else if (result == FightResult.WAR_1_2_4.ordinal()) {
             view.println(String.format("Draw! %s, %s and %s", players.get(0).getName(), players.get(1).getName(), players.get(3).getName()));
         }
-        else if (result == 12) {
+        else if (result == FightResult.WAR_1_3_4.ordinal()) {
             view.println(String.format("Draw! %s, %s and %s", players.get(0).getName(), players.get(2).getName(), players.get(3).getName()));
         }
         else  {
