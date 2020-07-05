@@ -20,12 +20,14 @@ class ComparatorForGameTest {
         card3.setChoose(0);
         card4.setChoose(0);
 
-        assertAll((Executable) () -> assertEquals(0, comparator.compare(card1, card2)),
-                (Executable) () -> assertEquals(0, comparator.compare(card2, card3)),
-                (Executable) () -> assertEquals(0, comparator.compare(card2, card3)),
-                (Executable) () -> assertEquals(0, comparator.compare(card4, card2)),
-                (Executable) () -> assertEquals(0, comparator.compare(card4, card2, card3)),
-                (Executable) () -> assertEquals(0, comparator.compare(card1, card2, card3, card4)));
+        int result = FightResult.FIRST_WIN.ordinal();
+
+        assertAll((Executable) () -> assertEquals(result, comparator.compare(card1, card2)),
+                (Executable) () -> assertEquals(result, comparator.compare(card2, card3)),
+                (Executable) () -> assertEquals(result, comparator.compare(card2, card3)),
+                (Executable) () -> assertEquals(result, comparator.compare(card4, card2)),
+                (Executable) () -> assertEquals(result, comparator.compare(card4, card2, card3)),
+                (Executable) () -> assertEquals(result, comparator.compare(card1, card2, card3, card4)));
     }
 
     @Test
@@ -35,12 +37,14 @@ class ComparatorForGameTest {
         card3.setChoose(2);
         card4.setChoose(2);
 
-        assertAll((Executable) () -> assertEquals(1, comparator.compare(card1, card2)),
-                (Executable) () -> assertEquals(1, comparator.compare(card2, card3)),
-                (Executable) () -> assertEquals(1, comparator.compare(card1, card4)),
-                (Executable) () -> assertEquals(1, comparator.compare(card1, card3)),
-                (Executable) () -> assertEquals(1, comparator.compare(card2, card3, card1)),
-                (Executable) () -> assertEquals(1, comparator.compare(card1, card3, card2, card4)));
+        int result = FightResult.SECOND_WIN.ordinal();
+
+        assertAll((Executable) () -> assertEquals(result, comparator.compare(card1, card2)),
+                (Executable) () -> assertEquals(result, comparator.compare(card2, card3)),
+                (Executable) () -> assertEquals(result, comparator.compare(card1, card4)),
+                (Executable) () -> assertEquals(result, comparator.compare(card1, card3)),
+                (Executable) () -> assertEquals(result, comparator.compare(card2, card3, card1)),
+                (Executable) () -> assertEquals(result, comparator.compare(card1, card3, card2, card4)));
     }
 
     @Test
@@ -50,11 +54,11 @@ class ComparatorForGameTest {
         card3.setChoose(5);
         card4.setChoose(5);
 
-        assertAll((Executable) () -> assertEquals(4, comparator.compare(card1, card3)),
-                (Executable) () -> assertEquals(4, comparator.compare(card2, card4)),
-                (Executable) () -> assertNotEquals(4, comparator.compare(card1, card4)),
-                (Executable) () -> assertNotEquals(1, comparator.compare(card2, card3)),
-                (Executable) () -> assertEquals(5, comparator.compare(card2, card3, card4)),
-                (Executable) () -> assertEquals(8, comparator.compare(card1, card2, card3, card4)));
+        assertAll((Executable) () -> assertEquals(FightResult.WAR_1_2.ordinal(), comparator.compare(card1, card3)),
+                (Executable) () -> assertEquals(FightResult.WAR_1_2.ordinal(), comparator.compare(card2, card4)),
+                (Executable) () -> assertNotEquals(FightResult.WAR_1_2.ordinal(), comparator.compare(card1, card4)),
+                (Executable) () -> assertNotEquals(FightResult.SECOND_WIN.ordinal(), comparator.compare(card2, card3)),
+                (Executable) () -> assertEquals(FightResult.WAR_1_3.ordinal(), comparator.compare(card2, card3, card4)),
+                (Executable) () -> assertEquals(FightResult.WAR_2_4.ordinal(), comparator.compare(card1, card2, card3, card4)));
     }
 }
